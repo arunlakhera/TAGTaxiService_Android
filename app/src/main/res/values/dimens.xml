@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="logo_width">250dp</dimen>
+    <dimen name="logo_height">200dp</dimen>
+
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_med">8dp</dimen>
+    <dimen name="margin_lar">12dp</dimen>
+
+    <dimen name="margin_vlar">50dp</dimen>
+
+    <dimen name="text_xsmall">10sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_med">16sp</dimen>
+    <dimen name="text_lar">20sp</dimen>
+    <dimen name="text_title">24sp</dimen>
+    <dimen name="btn_height">50dp</dimen>
+
+    <dimen name="card_radius">4dp</dimen>
+    <dimen name="card_elevation">5dp</dimen>
+
+    <dimen name="btn_back_height">35dp</dimen>
+    <dimen name="btn_back_width">35dp</dimen>
+    <dimen name="btn_resend_width">100dp</dimen>
+    <dimen name="btn_resend_height">40dp</dimen>
+
+    <dimen name="btn_menu_width">30dp</dimen>
+    <dimen name="btn_menu_height">30dp</dimen>
+
+    <dimen name="profile_pic_width">50dp</dimen>
+    <dimen name="profile_pic_height">50dp</dimen>
+
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_med">8dp</dimen>
+    <dimen name="padding_lar">12dp</dimen>
+    <dimen name="padding_xlar">16dp</dimen>
+
+    <dimen name="menu_header_height">200dp</dimen>
+    <dimen name="logo_bg_width">80dp</dimen>
+    <dimen name="logo_bg_height">60dp</dimen>
+    <dimen name="book_layout_height">60dp</dimen>
+
+    <dimen name="button_width_small">25dp</dimen>
+    <dimen name="button_height_small">25dp</dimen>
+
+    <dimen name="button_width_med">30dp</dimen>
+    <dimen name="button_height_med">30dp</dimen>
+
+    <dimen name="button_width_lar">35dp</dimen>
+    <dimen name="button_height_lar">35dp</dimen>
+    <dimen name="layout_vehicle_height">40dp</dimen>
+    <dimen name="layout_time_height">35dp</dimen>
+    <dimen name="layout_height_default">40dp</dimen>
+
+</resources>

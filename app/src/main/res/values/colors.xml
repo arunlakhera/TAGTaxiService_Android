@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#263238</color>
+    <color name="colorPrimaryDark">#37474F</color>
+    <color name="colorAccent">#D0021B</color>
+    <color name="colorButton">#101518</color>
+    <color name="colorToolbar">#171F22</color>
+    <color name="colorCardView">#171F22</color>
+    <color name="colorButtonOrange">#F57F17</color>
+    <color name="colorOrangeLight">#F0AE41</color>
+    <color name="colorGreen">#4CAF50</color>
+    <color name="colorWhite">#FFFFFF</color>
+</resources>

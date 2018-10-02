@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.pikchillytechnologies.tagtaxiservice.activity.BookRideActivity"
+    tools:openDrawer="start">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/layout_Toolbar"
+            layout="@layout/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" />
+
+        <ScrollView xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/button_Book"
+            android:layout_below="@id/layout_Toolbar"
+            android:background="@color/colorPrimary"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView_Logo"
+                    android:layout_width="@dimen/logo_bg_width"
+                    android:layout_height="@dimen/logo_bg_height"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:src="@drawable/logo_bg" />
+
+                <LinearLayout
+                    android:id="@+id/layout_PickupAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView_Logo"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    android:layout_marginBottom="@dimen/margin_med"
+                    android:background="@drawable/textview_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:text="@string/pickup_add_hint"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_small" />
+
+                    <EditText
+                        android:id="@+id/editText_PickupAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_med" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_DropAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_PickupAddress"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    android:layout_marginBottom="@dimen/margin_med"
+                    android:background="@drawable/textview_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:text="@string/drop_add_hint"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_small" />
+
+                    <EditText
+                        android:id="@+id/editText_DropAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_med" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_Passengers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_DropAddress"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    android:layout_marginBottom="@dimen/margin_med"
+                    android:background="@drawable/textview_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_small"
+                        android:text="@string/passengers_hint"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_small" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height_default"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_med"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button_Pass_1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg_transp_round"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="1"
+                            android:text="@string/one"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_Pass_2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg_transp_round"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="2"
+                            android:text="@string/two"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_Pass_3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg_transp_round"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="3"
+                            android:text="@string/three"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_Pass_4"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg_transp_round"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="4"
+                            android:text="@string/four"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_Pass_5"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg_transp_round"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="5"
+                            android:text="@string/five"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_Pass_6"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg_transp_round"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="6"
+                            android:text="@string/six"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_RoundTrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_Passengers"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    android:layout_marginBottom="@dimen/margin_med"
+                    android:background="@drawable/textview_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_small"
+                        android:text="@string/round_trip_hint"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_small" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height_default"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_med"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button_No"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_trans"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:textAllCaps="false"
+                            android:tag="No"
+                            android:text="@string/no"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_Yes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_green"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:textAllCaps="false"
+                            android:tag="Yes"
+                            android:text="@string/yes"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/text_small" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_TravelDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_RoundTrip"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    android:layout_marginBottom="@dimen/margin_med"
+                    android:background="@drawable/textview_bg"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_small"
+                        android:text="@string/travelling_on_hint"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:id="@+id/textView_ReturningOn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_small"
+                        android:text="@string/returning_on_hint"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_small" />
+
+                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height_default"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_med"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button_TravellingOnDate"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_trans"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="TravelDate"
+                            android:text="@string/select_travel_date"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_ReturningOnDate"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_trans"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="ReturnDate"
+                            android:text="@string/select_return_date"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/text_small" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_VehicleType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_TravelDate"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    android:layout_marginBottom="@dimen/margin_med"
+                    android:background="@drawable/textview_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/VehicleType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_small"
+                        android:text="@string/vehicle_type_hint"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_small" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height_default"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_med"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button_Small"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_trans"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="Small"
+                            android:text="@string/small"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_Sedan"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_trans"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="Sedan"
+                            android:text="@string/sedan"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_Suv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_trans"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="Suv"
+                            android:text="@string/suv"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_Time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_VehicleType"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    android:layout_marginBottom="@dimen/margin_med"
+                    android:background="@drawable/textview_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/PickupTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_small"
+                        android:gravity="top"
+                        android:text="@string/pickup_time_hint"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_small" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height_default"
+                        android:layout_marginStart="@dimen/margin_lar"
+                        android:layout_marginLeft="@dimen/margin_lar"
+                        android:layout_marginEnd="@dimen/margin_lar"
+                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_marginBottom="@dimen/margin_med"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_trans">
+
+                            <Spinner
+                                android:id="@+id/spinner_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/margin_small"
+                                android:layout_marginLeft="@dimen/margin_small"
+                                android:gravity="center" />
+
+                        </RelativeLayout>
+
+                        <Button
+                            android:id="@+id/button_AM"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_trans"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="AM"
+                            android:text="@string/am"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/button_PM"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_big_bg_trans"
+                            android:gravity="center"
+                            android:onClick="updateButton"
+                            android:tag="PM"
+                            android:text="@string/pm"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="@dimen/text_small" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/button_Book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorButtonOrange"
+            android:text="@string/button_book"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_lar" />
+    </RelativeLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/white"
+            app:elevation="@dimen/card_elevation"
+            app:headerLayout="@layout/navigation_header"
+            app:itemIconTint="@color/colorButtonOrange"
+            app:menu="@menu/drawer_menu" />
+
+</android.support.v4.widget.DrawerLayout>

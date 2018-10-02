@@ -1,0 +1,480 @@
+package com.pikchillytechnologies.tagtaxiservice.activity;
+
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EdgeEffect;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.pikchillytechnologies.tagtaxiservice.R;
+import com.pikchillytechnologies.tagtaxiservice.helperfile.FirebaseRef;
+import com.pikchillytechnologies.tagtaxiservice.helperfile.HelperFile;
+import com.pikchillytechnologies.tagtaxiservice.model.Booking;
+import java.util.Calendar;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class BookRideActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawer;
+    @BindView(R.id.textView_ScreenTitle)
+    TextView mScreenTitle_TextView;
+    @BindView(R.id.navigation_view)
+    NavigationView mNavigationView;
+
+    @BindView(R.id.editText_PickupAddress)
+    EditText mPickupAddressEditText;
+    @BindView(R.id.editText_DropAddress)
+    EditText mDropAddressEditText;
+
+    @BindView(R.id.button_Yes)
+    Button mYesButton;
+    @BindView(R.id.button_No)
+    Button mNoButton;
+    @BindView(R.id.button_AM)
+    Button mAMButton;
+    @BindView(R.id.button_PM)
+    Button mPMButton;
+    @BindView(R.id.button_Small)
+    Button mSmallButton;
+    @BindView(R.id.button_Sedan)
+    Button mSedanButton;
+    @BindView(R.id.button_Suv)
+    Button mSuvButton;
+    @BindView(R.id.button_Pass_1)
+    Button mPassenger_1;
+    @BindView(R.id.button_Pass_2)
+    Button mPassenger_2;
+    @BindView(R.id.button_Pass_3)
+    Button mPassenger_3;
+    @BindView(R.id.button_Pass_4)
+    Button mPassenger_4;
+    @BindView(R.id.button_Pass_5)
+    Button mPassenger_5;
+    @BindView(R.id.button_Pass_6)
+    Button mPassenger_6;
+    @BindView(R.id.spinner_time)
+    Spinner mTimeSpinner;
+    @BindView(R.id.button_ReturningOnDate)
+    Button mReturningOnDateButton;
+    @BindView(R.id.button_TravellingOnDate)
+    Button mTravellingOnDateButton;
+    @BindView(R.id.textView_ReturningOn)
+    TextView mReturningOnTextView;
+
+    private HelperFile mHelperFile;
+    private List<String> mTime;
+    private ArrayAdapter<String> mTimeAdapter;
+    private String mTimeSelected;
+
+    private String mPickupAddress;
+    private String mDropAddress;
+    private String mNumberOfPassengers;
+    private String mRoundTrip;
+    private String mTravellingOnDate;
+    private String mReturningOnDate;
+    private String mVehicleType;
+    private String mPickupTime;
+    private String mAMPM;
+    private Bundle mUserBundle;
+    private String mUserPhoneNumber;
+    private String mBookingId;
+
+    private FirebaseRef mFirebaseRef;
+    private DatabaseReference mBookingRef;
+    private Booking mBooking;
+    private Boolean mBookingFlag;
+    private Boolean mTravelDateFlag;
+    private Boolean mReturnDateFlag;
+
+    private DatePicker datePicker;
+    private Calendar calendar;
+    private int mCurrentYear;
+    private int mCurrentMonth;
+    private int mCurrentDay;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_book_ride);
+
+        ButterKnife.bind(this);
+        mHelperFile = new HelperFile();
+        mFirebaseRef = new FirebaseRef();
+        mBookingFlag = false;
+
+        mTravelDateFlag = false;
+        mReturnDateFlag = false;
+
+        mUserBundle = getIntent().getExtras();
+        mUserPhoneNumber = mUserBundle.getString("Phone");
+
+        calendar = Calendar.getInstance();
+
+        mCurrentYear = calendar.get(Calendar.YEAR);
+        mCurrentMonth = calendar.get(Calendar.MONTH);
+        mCurrentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Spinner dropdown elements
+        mTime = new ArrayList<String>();
+
+        // Set the values
+        setValues();
+
+        for (int i = 1; i <= 12; i++){
+            mTime.add(String.valueOf(i));
+        }
+     
+        mTimeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_time_item,mTime);
+        mTimeSpinner.setAdapter(mTimeAdapter);
+
+    }
+
+    @OnClick(R.id.button_TravellingOnDate)
+    public void onTravelDateClick(){
+        setDate("TravelDate");
+        mTravellingOnDate = String.valueOf(mTravellingOnDateButton.getText());
+        setButton(mTravellingOnDateButton,R.drawable.btn_big_bg_green,Color.WHITE);
+
+    }
+
+    @OnClick(R.id.button_ReturningOnDate)
+    public void onReturnDateClick(){
+        setDate("ReturnDate");
+        mReturningOnDate = String.valueOf(mReturningOnDateButton.getText());
+        setButton(mReturningOnDateButton,R.drawable.btn_big_bg_green,Color.WHITE);
+    }
+
+    public void setDate(final String mButton){
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        String selectedDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+
+                        if(mButton.equals("TravelDate")){
+                            mTravellingOnDateButton.setText(selectedDate);
+
+                        }else if(mButton.equals("ReturnDate")){
+                            mReturningOnDateButton.setText(selectedDate);
+                        }
+                    }
+                }, mCurrentYear, mCurrentMonth, mCurrentDay);
+        datePickerDialog.show();
+    }
+   /*
+    public void setDate() {
+        showDialog(999);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        // TODO Auto-generated method stub
+        if (id == 999) {
+
+            return new DatePickerDialog(this, travelDateListener, mCurrentYear, mCurrentMonth, mCurrentDay);
+
+        }
+
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener travelDateListener = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+                    // TODO Auto-generated method stub
+                    // arg1 = year
+                    // arg2 = month
+                    // arg3 = day
+                    showDate(arg1, arg2+1, arg3);
+                }
+            };
+
+    private void showDate(int year, int month, int day) {
+
+            if((year >= mCurrentYear) && (month >= mCurrentMonth) && (day >= mCurrentDay)){
+                mTravellingOnDateButton.setText(new StringBuilder().append(day).append("/").append(month).append("/").append(year));
+
+            }else{
+                Toast.makeText(this,"Please select future Travel date for booking.",Toast.LENGTH_LONG).show();
+                mTravellingOnDateButton.setText(R.string.select_travel_date);
+            }
+    }
+*/
+    // Action to perform when Menu button is pressed
+    @OnClick(R.id.button_Menu)
+    public void onMenuClick(){
+
+        if (mDrawer.isDrawerOpen(Gravity.START)) {
+            mDrawer.closeDrawer(Gravity.START);
+        } else {
+            mDrawer.openDrawer(Gravity.START);
+        }
+    }
+
+    // Action to perform when back button is pressed
+    @OnClick(R.id.button_Back)
+    public void onBackButtonClick(View v) {
+        mHelperFile.screenIntent(BookRideActivity.this, HomeActivity.class);
+    }
+
+    // Action to perform when Book button is clicked
+    @OnClick(R.id.button_Book)
+    public void onBookButtonClick(View v) {
+
+        updateBooking();
+
+        if(mBookingFlag) {
+            mHelperFile.screenToast(BookRideActivity.this, R.string.book_request, Toast.LENGTH_LONG);
+            mHelperFile.screenIntent(BookRideActivity.this, BookingStatusActivity.class);
+        }
+    }
+
+    /**
+     * Function to Update Booking in Firebase
+     * */
+    public void updateBooking(){
+
+        mPickupAddress = String.valueOf(mPickupAddressEditText.getText());
+        mDropAddress = String.valueOf(mDropAddressEditText.getText());
+        mTravellingOnDate = String.valueOf(mTravellingOnDateButton.getText());
+        mReturningOnDate = String.valueOf(mReturningOnDateButton.getText());
+
+        if(mPickupAddress.isEmpty()){
+            Toast.makeText(this,"Please enter Pickup Address",Toast.LENGTH_LONG).show();
+        }else if(mDropAddress.isEmpty()){
+            Toast.makeText(this,"Please enter Drop Address",Toast.LENGTH_LONG).show();
+        }else if(mNumberOfPassengers.isEmpty()){
+            Toast.makeText(this,"Please select Number of Passengers",Toast.LENGTH_LONG).show();
+        }else if(mTravellingOnDate.isEmpty()){
+            Toast.makeText(this,"Please enter Travel Date",Toast.LENGTH_LONG).show();
+        }else if(mReturningOnDate.isEmpty() && mRoundTrip.equals("Yes")){
+            Toast.makeText(this,"Please enter Return date",Toast.LENGTH_LONG).show();
+        }else if(mAMPM.isEmpty()){
+            Toast.makeText(this,"Please select Pickup Time",Toast.LENGTH_LONG).show();
+        }else{
+
+            mBookingId = String.valueOf(mFirebaseRef.getmBookingRef().child(mUserPhoneNumber).push().getKey());
+            mBookingRef = mFirebaseRef.getmBookingRef().child(mUserPhoneNumber).child(mBookingId);
+
+            mBooking = new Booking(mPickupAddress,mDropAddress,mNumberOfPassengers,mRoundTrip,mTravellingOnDate,mReturningOnDate,mVehicleType,mPickupTime+mAMPM);
+            mBookingRef.setValue(mBooking);
+            mBookingFlag = true;
+        }
+    }
+
+    /**
+     * Function to update Button appearance
+     */
+    public void updateButton(View view) {
+
+        String buttonTag = String.valueOf(view.getTag());
+
+        switch (buttonTag) {
+            case "Yes":
+                mRoundTrip = "Yes";
+                mTravelDateFlag=true;
+                mReturnDateFlag = true;
+                setButton(mYesButton, R.drawable.btn_big_bg_green, Color.WHITE);
+                setButton(mNoButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                mReturningOnDateButton.setEnabled(true);
+                mReturningOnDateButton.setTextColor(Color.WHITE);
+                mReturningOnDateButton.setAlpha((float) 1.0);
+                mReturningOnTextView.setAlpha((float) 1.0);
+                break;
+            case "No":
+                mRoundTrip = "No";
+                mTravelDateFlag=true;
+                mReturnDateFlag = false;
+                setButton(mNoButton, R.drawable.btn_big_bg_green, Color.WHITE);
+                setButton(mYesButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                mReturningOnDateButton.setEnabled(false);
+                mReturningOnDateButton.setText(R.string.select_return_date);
+                mReturningOnDateButton.setBackgroundResource(R.drawable.btn_big_bg_trans);
+                mReturningOnDateButton.setTextColor(Color.DKGRAY);
+                mReturningOnDateButton.setAlpha((float) 0.4);
+                mReturningOnTextView.setAlpha((float) 0.4);
+                break;
+            case "Small":
+                mVehicleType = "Small";
+                setButton(mSmallButton, R.drawable.btn_big_bg_green, Color.WHITE);
+                setButton(mSedanButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                setButton(mSuvButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                break;
+            case "Sedan":
+                mVehicleType = "Sedan";
+                setButton(mSedanButton, R.drawable.btn_big_bg_green, Color.WHITE);
+                setButton(mSmallButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                setButton(mSuvButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                break;
+            case "Suv":
+                mVehicleType = "Suv";
+                setButton(mSuvButton, R.drawable.btn_big_bg_green, Color.WHITE);
+                setButton(mSmallButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                setButton(mSedanButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                break;
+            case "AM":
+                mAMPM = "AM";
+                setButton(mAMButton, R.drawable.btn_big_bg_green, Color.WHITE);
+                setButton(mPMButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                break;
+            case "PM":
+                mAMPM = "PM";
+                setButton(mPMButton, R.drawable.btn_big_bg_green, Color.WHITE);
+                setButton(mAMButton, R.drawable.btn_big_bg_trans, Color.GRAY);
+                break;
+            case "1":
+                mPickupTime = "1";
+                setButton(mPassenger_1, R.drawable.btn_bg_green_round, Color.WHITE);
+                setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_4, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_5, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
+                break;
+            case "2":
+                mPickupTime = "2";
+                setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_2, R.drawable.btn_bg_green_round, Color.WHITE);
+                setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_4, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_5, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
+                break;
+            case "3":
+                mPickupTime = "3";
+                setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_3, R.drawable.btn_bg_green_round, Color.WHITE);
+                setButton(mPassenger_4, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_5, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
+                break;
+            case "4":
+                mPickupTime = "4";
+                setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_4, R.drawable.btn_bg_green_round, Color.WHITE);
+                setButton(mPassenger_5, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
+                break;
+            case "5":
+                mPickupTime = "5";
+                setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_4, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_5, R.drawable.btn_bg_green_round, Color.WHITE);
+                setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
+                break;
+            case "6":
+                mPickupTime = "6";
+                setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_4, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_5, R.drawable.btn_bg_transp_round, Color.GRAY);
+                setButton(mPassenger_6, R.drawable.btn_bg_green_round, Color.WHITE);
+                break;
+        }
+    }
+
+    /**
+     * Function to set background of button and text color
+     */
+    public void setButton(Button btn, Integer bgBtnID, Integer textColor) {
+
+        btn.setBackgroundResource(bgBtnID);
+        btn.setTextColor(textColor);
+
+    }
+
+    /**
+     * Function added to get the menu item selected
+     */
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        // Call Navigate function for the item selected
+        mHelperFile.menuOptionSelected(item, BookRideActivity.this);
+
+        // Close the menu once any option is selected by user
+        mDrawer.closeDrawer(Gravity.START);
+
+        return true;
+    }
+
+    /**
+     * Function to close the Menu when back button on mobile is pressed
+     */
+    @Override
+    public void onBackPressed() {
+
+        if (mDrawer.isDrawerOpen(Gravity.START)) {
+            mDrawer.closeDrawer(Gravity.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * Function to set values
+     */
+    public void setValues() {
+
+        mNavigationView.setNavigationItemSelectedListener(this);
+        mScreenTitle_TextView.setText(R.string.screen_book_ride);
+        mReturningOnDateButton.setEnabled(true);
+        mTimeSpinner.setOnItemSelectedListener(this);
+        mTimeSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        mTimeSelected = String.valueOf(parent.getItemAtPosition(position));
+        ((TextView) parent.getSelectedView()).setTextColor(getResources().getColor(R.color.colorWhite));
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+        Log.i("TimeNotSelected","Time was not selected");
+    }
+}

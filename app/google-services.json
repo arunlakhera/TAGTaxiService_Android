@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "892516064983",
+    "firebase_url": "https://tagtaxiservice-216306.firebaseio.com",
+    "project_id": "tagtaxiservice-216306",
+    "storage_bucket": "tagtaxiservice-216306.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892516064983:android:3c958c6487aaf496",
+        "android_client_info": {
+          "package_name": "com.pikchillytechnologies.tagtaxiservice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892516064983-0bt7408r875h13pj79grdrev2cljfg0v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pikchillytechnologies.tagtaxiservice",
+            "certificate_hash": "fa7845a420ccb2e2d11dcb289c7cb8e8f8afff7a"
+          }
+        },
+        {
+          "client_id": "892516064983-2edg32o2lulg7uqu0jfcnp4nh60cred9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0ko5iXaBZn5EsHz3hvsEHecRQTCPYIHI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892516064983-2edg32o2lulg7uqu0jfcnp4nh60cred9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

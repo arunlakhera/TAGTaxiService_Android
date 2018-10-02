@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:fillViewport="true"
+    tools:context=".activity.SignInActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- Logo of TAG Taxi -->
+        <ImageView
+            android:id="@+id/imageView_Logo"
+            android:layout_width="@dimen/logo_width"
+            android:layout_height="@dimen/logo_height"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_lar"
+            android:contentDescription="@string/logo_image"
+            android:src="@drawable/tag_logo" />
+
+        <!-- Layout for User Phone Number / Password / Sign In Button -->
+        <LinearLayout
+            android:id="@+id/layout_SignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView_Logo"
+            android:layout_marginBottom="@dimen/margin_lar"
+            android:layout_marginEnd="@dimen/margin_med"
+            android:layout_marginLeft="@dimen/margin_med"
+            android:layout_marginRight="@dimen/margin_med"
+            android:layout_marginStart="@dimen/margin_med"
+            android:layout_marginTop="@dimen/margin_lar"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/margin_med"
+                android:layout_marginLeft="@dimen/margin_med"
+                android:layout_marginRight="@dimen/margin_med"
+                android:layout_marginStart="@dimen/margin_med"
+                android:layout_marginTop="@dimen/margin_med"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColorHint="@android:color/darker_gray">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_small"
+                        android:enabled="false"
+                        android:inputType="phone"
+                        android:maxLength="3"
+                        android:text="@string/country_code"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_lar" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColorHint="@android:color/darker_gray">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/textView_PhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_small"
+                        android:hint="@string/user_number_hint"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/text_lar" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_lar"
+                android:layout_marginLeft="@dimen/margin_lar"
+                android:layout_marginRight="@dimen/margin_lar"
+                android:layout_marginStart="@dimen/margin_lar"
+                android:gravity="end"
+                android:text="@string/lbl_sms"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/text_xsmall" />
+
+            <Button
+                android:id="@+id/button_SignIn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginBottom="@dimen/margin_lar"
+                android:layout_marginEnd="@dimen/margin_lar"
+                android:layout_marginLeft="@dimen/margin_lar"
+                android:layout_marginRight="@dimen/margin_lar"
+                android:layout_marginStart="@dimen/margin_lar"
+                android:layout_marginTop="@dimen/margin_med"
+                android:background="@drawable/button_blue_bg"
+                android:text="@string/sign_in"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_title" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimaryDark" />
+    </RelativeLayout>
+</ScrollView>

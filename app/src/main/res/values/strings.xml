@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">TAG Taxi Service</string>
+    <string name="lbl_developed_by">Developed By</string>
+    <string name="lbl_developer">www.pikchillytechnologies.com</string>
+    <string name="user_number_hint">Enter Phone Number</string>
+    <string name="user_pwd_hint">Enter Password</string>
+    <string name="lbl_sms">You will receive SMS to verify Phone Number</string>
+    <string name="sign_in">Book My Ride</string>
+    <string name="not_registered">Not Registered?</string>
+    <string name="create_account">Create Account</string>
+    <string name="logo_image">Logo Image</string>
+
+    <string name="user_name_hint">Enter Name</string>
+    <string name="user_email_hint">Enter Email ID</string>
+    <string name="otp_hint">Enter OTP</string>
+    <string name="resend">Resend</string>
+    <string name="confirm">Confirm</string>
+    <string name="title_activity_home">Map</string>
+
+
+    <string name="home">Home</string>
+    <string name="country_code">+91</string>
+
+    <string name="button_src_address">Source Address</string>
+    <string name="button_dest_address">Destination Address</string>
+    <string name="button_ride_status">Ride Status</string>
+    <string name="button_book_ride">Book Ride</string>
+    <string name="button_book">Book</string>
+
+    <string name="screen_verification">Verification</string>
+    <string name="screen_home">Home</string>
+    <string name="screen_book_ride">Book Ride</string>
+    <string name="screen_booking_status">Booking Status</string>
+    <string name="screen_booking_detail">Booking Detail</string>
+    <string name="screen_my_profile">My Profile</string>
+    <string name="screen_settings">Settings</string>
+
+    <string name="valid_phone_msg">Please enter a valid Phone Number</string>
+    <string name="wrong_code">Incorrect Code Entered</string>
+
+    <string name="code_sent">OTP has been Sent to your mobile phone Successfully</string>
+    <string name="code_not_sent">OTP could not be sent to your mobile phone. Please try again!</string>
+    <string name="wait_for_code">Please Wait for the code to be sent</string>
+    <string name="sms_quota">The SMS quota for the project has been exceeded</string>
+    <string name="navigation_Drawer_open">Open</string>
+    <string name="navigation_Drawer_close">Close</string>
+
+    <string name="menu_book_ride">Book Ride</string>
+    <string name="menu_booking_status">Booking Status</string>
+    <string name="menu_my_profile">My Profile</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_user_guest">Guest</string>
+
+    <string name="pickup_add_hint">Pickup Address</string>
+    <string name="drop_add_hint">Drop Address</string>
+    <string name="passengers_hint">Passengers</string>
+    <string name="round_trip_hint">Round Trip</string>
+    <string name="travelling_on_hint">Travelling On</string>
+    <string name="returning_on_hint">Returning On</string>
+    <string name="vehicle_type_hint">Vehicle Type</string>
+    <string name="pickup_time_hint">Pickup Time</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="ten">10</string>
+    <string name="eleven">11</string>
+    <string name="twelve">12</string>
+    <string name="select_time">Select Pickup Time</string>
+
+    <string name="small">Small</string>
+    <string name="sedan">Sedan</string>
+    <string name="suv">SUV</string>
+    <string name="select_travel_date">Select Travel Date</string>
+    <string name="select_return_date">Select Return Date</string>
+
+    <string name="book_request">Your request has been sent. We will contact you with the quote shortly!</string>
+
+
+</resources>
