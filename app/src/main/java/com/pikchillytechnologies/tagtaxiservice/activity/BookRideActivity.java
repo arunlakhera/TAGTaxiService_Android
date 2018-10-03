@@ -136,7 +136,10 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
         mReturnDateFlag = false;
 
         mUserBundle = getIntent().getExtras();
-        mUserPhoneNumber = mUserBundle.getString("Phone");
+
+        if(mUserBundle != null){
+            mUserPhoneNumber = mUserBundle.getString("Phone");
+        }
 
         calendar = Calendar.getInstance();
 
@@ -145,7 +148,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
         mCurrentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         // Spinner dropdown elements
-        mTime = new ArrayList<String>();
+        mTime = new ArrayList<>();
 
         // Set the values
         setValues();
@@ -154,7 +157,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
             mTime.add(String.valueOf(i));
         }
      
-        mTimeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_time_item,mTime);
+        mTimeAdapter = new ArrayAdapter<>(this,R.layout.spinner_time_item,mTime);
         mTimeSpinner.setAdapter(mTimeAdapter);
 
     }
@@ -174,7 +177,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
         setButton(mReturningOnDateButton,R.drawable.btn_big_bg_green,Color.WHITE);
     }
 
-    public void setDate(final String mButton){
+    public void setDate(final String mDateButton){
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -185,56 +188,17 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
                         String selectedDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
 
-                        if(mButton.equals("TravelDate")){
+                        if(mDateButton.equals("TravelDate")){
                             mTravellingOnDateButton.setText(selectedDate);
 
-                        }else if(mButton.equals("ReturnDate")){
+                        }else if(mDateButton.equals("ReturnDate")){
                             mReturningOnDateButton.setText(selectedDate);
                         }
                     }
                 }, mCurrentYear, mCurrentMonth, mCurrentDay);
         datePickerDialog.show();
     }
-   /*
-    public void setDate() {
-        showDialog(999);
-    }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
-        if (id == 999) {
-
-            return new DatePickerDialog(this, travelDateListener, mCurrentYear, mCurrentMonth, mCurrentDay);
-
-        }
-
-        return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener travelDateListener = new
-            DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
-                    // arg1 = year
-                    // arg2 = month
-                    // arg3 = day
-                    showDate(arg1, arg2+1, arg3);
-                }
-            };
-
-    private void showDate(int year, int month, int day) {
-
-            if((year >= mCurrentYear) && (month >= mCurrentMonth) && (day >= mCurrentDay)){
-                mTravellingOnDateButton.setText(new StringBuilder().append(day).append("/").append(month).append("/").append(year));
-
-            }else{
-                Toast.makeText(this,"Please select future Travel date for booking.",Toast.LENGTH_LONG).show();
-                mTravellingOnDateButton.setText(R.string.select_travel_date);
-            }
-    }
-*/
     // Action to perform when Menu button is pressed
     @OnClick(R.id.button_Menu)
     public void onMenuClick(){

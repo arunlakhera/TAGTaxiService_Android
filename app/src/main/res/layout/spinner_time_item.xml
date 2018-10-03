@@ -4,5 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:textColor="@color/colorCardView"
+    android:textColor="@color/colorWhite"
+    android:background="@color/colorPrimary"
     android:textSize="@dimen/text_med" />
