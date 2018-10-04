@@ -83,8 +83,25 @@
     <string name="suv">SUV</string>
     <string name="select_travel_date">Select Travel Date</string>
     <string name="select_return_date">Select Return Date</string>
-
     <string name="book_request">Your request has been sent. We will contact you with the quote shortly!</string>
 
+    <string name="pending_status">Pending</string>
+    <string name="quoted_status">Quoted</string>
+    <string name="accepted_status">Accepted</string>
+    <string name="cancelled_status">Cancelled</string>
+    <string name="completed_status">Completed</string>
+
+    <string name="booking_error">Error Occurred. Please Try Again</string>
+    <string name="pickup_error">Please enter Pickup Address</string>
+    <string name="drop_error">Please enter Pickup Address</string>
+    <string name="travel_error">Please enter Travel Date</string>
+    <string name="return_error">Please enter Return Date</string>
+    <string name="pickup_time_error">Please select Pickup Time</string>
+    <string name="booking_complete_error">Booking could not be completed. Please fill complete information</string>
+
+
+
+    <string name="button_history">History</string>
+    <string name="button_recent">Recent</string>
 
 </resources>

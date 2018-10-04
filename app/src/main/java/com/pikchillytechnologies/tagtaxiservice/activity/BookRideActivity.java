@@ -138,7 +138,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
         mTravelDateFlag = false;
         mReturnDateFlag = false;
-        mBookingStatus = "Pending";
+        mBookingStatus = getResources().getString(R.string.pending_status);
         mReason = "";
 
         mNumberOfPassengers = "1";
@@ -241,7 +241,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
             mHelperFile.screenToast(BookRideActivity.this, R.string.book_request, Toast.LENGTH_LONG);
             mHelperFile.screenIntent(BookRideActivity.this, BookingStatusActivity.class);
         } else {
-            Toast.makeText(this, "Error Occured. Please Try Again", Toast.LENGTH_LONG).show();
+            mHelperFile.screenToast(BookRideActivity.this,R.string.booking_error,Toast.LENGTH_LONG);
         }
     }
 
@@ -254,21 +254,23 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
         if (mPickupAddress.trim().isEmpty()) {
             saveFlag = false;
-            Toast.makeText(this, "Please enter Pickup Address", Toast.LENGTH_LONG).show();
+            mHelperFile.screenToast(BookRideActivity.this,R.string.pickup_error,Toast.LENGTH_LONG);
 
         } else if (mDropAddress.trim().isEmpty()) {
             saveFlag = false;
-            Toast.makeText(this, "Please enter Drop Address", Toast.LENGTH_LONG).show();
+            mHelperFile.screenToast(BookRideActivity.this,R.string.drop_error,Toast.LENGTH_LONG);
 
         } else if (mTravellingOnDate.isEmpty()) {
             saveFlag = false;
-            Toast.makeText(this, "Please enter Travel Date", Toast.LENGTH_LONG).show();
-        } else if (mReturningOnDate.isEmpty() && mRoundTrip.equals("Yes")) {
+            mHelperFile.screenToast(BookRideActivity.this,R.string.travel_error,Toast.LENGTH_LONG);
+
+        } else if (mReturningOnDate.isEmpty() && mRoundTrip.equals(getResources().getString(R.string.yes))) {
             saveFlag = false;
-            Toast.makeText(this, "Please enter Return date", Toast.LENGTH_LONG).show();
+            mHelperFile.screenToast(BookRideActivity.this,R.string.return_error,Toast.LENGTH_LONG);
+
         } else if (mAMPM.isEmpty()) {
             saveFlag = false;
-            Toast.makeText(this, "Please select Pickup Time", Toast.LENGTH_LONG).show();
+            mHelperFile.screenToast(BookRideActivity.this,R.string.pickup_time_error,Toast.LENGTH_LONG);
         } else {
             saveFlag = true;
         }
@@ -276,7 +278,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
         if (saveFlag) {
             updateFirebase();
         } else {
-            Toast.makeText(this, "Booking could not be completed. Please fill complete information", Toast.LENGTH_LONG).show();
+            mHelperFile.screenToast(BookRideActivity.this,R.string.booking_complete_error,Toast.LENGTH_LONG);
         }
     }
 
@@ -292,7 +294,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
             mBookingRef.setValue(mBooking);
 
             // Save data in UserBooking Table
-            mFirebaseRef.getmUserBookingRef().child(mUserPhoneNumber).child(mBookingId).setValue("Yes");
+            mFirebaseRef.getmUserBookingRef().child(mUserPhoneNumber).child(mBookingId).setValue(getResources().getString(R.string.yes));
 
             mBookingFlag = true;
         } catch (Exception e) {
@@ -310,7 +312,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
         switch (buttonTag) {
             case "Yes":
-                mRoundTrip = "Yes";
+                mRoundTrip = getResources().getString(R.string.yes);
                 mTravelDateFlag = true;
                 mReturnDateFlag = true;
                 setButton(mYesButton, R.drawable.btn_big_bg_green, Color.WHITE);
@@ -321,7 +323,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 mReturningOnTextView.setAlpha((float) 1.0);
                 break;
             case "No":
-                mRoundTrip = "No";
+                mRoundTrip = getResources().getString(R.string.no);
                 mTravelDateFlag = true;
                 mReturnDateFlag = false;
                 mReturningOnDate = "";
@@ -335,35 +337,35 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 mReturningOnTextView.setAlpha((float) 0.4);
                 break;
             case "Small":
-                mVehicleType = "Small";
+                mVehicleType = getResources().getString(R.string.small);
                 setButton(mSmallButton, R.drawable.btn_big_bg_green, Color.WHITE);
                 setButton(mSedanButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 setButton(mSuvButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 break;
             case "Sedan":
-                mVehicleType = "Sedan";
+                mVehicleType = getResources().getString(R.string.sedan);
                 setButton(mSedanButton, R.drawable.btn_big_bg_green, Color.WHITE);
                 setButton(mSmallButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 setButton(mSuvButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 break;
             case "Suv":
-                mVehicleType = "Suv";
+                mVehicleType = getResources().getString(R.string.suv);
                 setButton(mSuvButton, R.drawable.btn_big_bg_green, Color.WHITE);
                 setButton(mSmallButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 setButton(mSedanButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 break;
             case "AM":
-                mAMPM = "AM";
+                mAMPM = getResources().getString(R.string.am);
                 setButton(mAMButton, R.drawable.btn_big_bg_green, Color.WHITE);
                 setButton(mPMButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 break;
             case "PM":
-                mAMPM = "PM";
+                mAMPM = getResources().getString(R.string.pm);
                 setButton(mPMButton, R.drawable.btn_big_bg_green, Color.WHITE);
                 setButton(mAMButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 break;
             case "1":
-                mNumberOfPassengers = "1";
+                mNumberOfPassengers = getResources().getString(R.string.one);
                 setButton(mPassenger_1, R.drawable.btn_bg_green_round, Color.WHITE);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
@@ -372,7 +374,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "2":
-                mNumberOfPassengers = "2";
+                mNumberOfPassengers = getResources().getString(R.string.two);
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_green_round, Color.WHITE);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
@@ -381,7 +383,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "3":
-                mNumberOfPassengers = "3";
+                mNumberOfPassengers = getResources().getString(R.string.three);
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_green_round, Color.WHITE);
@@ -390,7 +392,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "4":
-                mNumberOfPassengers = "4";
+                mNumberOfPassengers = getResources().getString(R.string.four);
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
@@ -399,7 +401,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "5":
-                mNumberOfPassengers = "5";
+                mNumberOfPassengers = getResources().getString(R.string.five);
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
@@ -408,7 +410,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "6":
-                mNumberOfPassengers = "6";
+                mNumberOfPassengers = getResources().getString(R.string.six);
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);

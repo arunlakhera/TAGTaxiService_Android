@@ -9,23 +9,52 @@
     tools:context="com.pikchillytechnologies.tagtaxiservice.activity.BookingStatusActivity"
     tools:openDrawer="start">
 
-    <ScrollView xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:fillViewport="true"
-        tools:context=".activity.HomeActivity">
+        android:background="@color/colorPrimary">
 
-        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        <include
+            android:id="@+id/layout_Toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_BookingStatus"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_below="@id/layout_Toolbar"
+            android:layout_above="@id/layout_Button"
+            />
 
-            <include
-                android:id="@+id/layout_Toolbar"
-                layout="@layout/toolbar_layout" />
-
-        </RelativeLayout>
-    </ScrollView>
+        <LinearLayout
+            android:id="@+id/layout_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            >
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/button_history"
+                android:background="@drawable/btn_small_bg_trans_flat"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_lar"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/button_recent"
+                android:background="@color/colorButtonOrange"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_lar"
+                />
+        </LinearLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
