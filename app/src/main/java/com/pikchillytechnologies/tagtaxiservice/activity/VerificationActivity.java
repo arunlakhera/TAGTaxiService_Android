@@ -67,19 +67,6 @@ public class VerificationActivity extends AppCompatActivity {
     private String mCountryCode;
     private CountDownTimer mCodeCount;
     private Boolean mCodeSentFlag = false;
-    private String mUserType;
-
-    private String mUserPhoneNumber;
-
-    private FirebaseRef mFirebaseRef;
-    private FirebaseAuth mAuthRef;
-    private FirebaseUser mCurrentUser;
-    private DatabaseReference mUserProfileRef;
-    private DatabaseReference mDatabaseRef;
-    private DatabaseReference mUserRef;
-    private User mUser;
-    private ValueEventListener mListener;
-
     // Variable to store the code that was sent which can then be matched with the code that user enters
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
@@ -121,6 +108,16 @@ public class VerificationActivity extends AppCompatActivity {
             mCodeSentFlag = true;
         }
     };
+    private String mUserType;
+    private String mUserPhoneNumber;
+    private FirebaseRef mFirebaseRef;
+    private FirebaseAuth mAuthRef;
+    private FirebaseUser mCurrentUser;
+    private DatabaseReference mUserProfileRef;
+    private DatabaseReference mDatabaseRef;
+    private DatabaseReference mUserRef;
+    private User mUser;
+    private ValueEventListener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,18 +127,18 @@ public class VerificationActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mFirebaseRef = new FirebaseRef();
-
-        // Initialize views
-        //mAuthRef = FirebaseAuth.getInstance();
-
         mHelperFile = new HelperFile();
         mUserDetail = getIntent().getExtras();
 
-        // Get Phone Number entered by user in Sign In Activity
-        mPhone = mUserDetail.getString("Phone", "NA");
+        if (mUserDetail != null) {
+            // Get Phone Number entered by user in Sign In Activity
+            mPhone = mUserDetail.getString("Phone", "NA");
 
-        // Set the phone number in Phone field
-        mPhone_TextInputEditText.setText(mPhone);
+            // Set the phone number in Phone field
+            mPhone_TextInputEditText.setText(mPhone);
+        } else {
+            Toast.makeText(VerificationActivity.this, "Phone Number could not be retrieved. Please try again!", Toast.LENGTH_LONG).show();
+        }
 
         // Call Function to send verification code
         sendVerificationCode();
@@ -192,7 +189,7 @@ public class VerificationActivity extends AppCompatActivity {
         // Function to send OTP Code to the phone number entered
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 //mCountryCode + mPhone,        // Phone number to verify
-                tempPhoneNum2,                   //
+                tempPhoneNum,                   //
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
@@ -269,7 +266,11 @@ public class VerificationActivity extends AppCompatActivity {
     public void signInUser() {
 
         mCurrentUser = mFirebaseRef.getmAuthRef().getCurrentUser();
-        mUserPhoneNumber = mCurrentUser.getPhoneNumber();
+
+        if (mCurrentUser != null) {
+            mUserPhoneNumber = mCurrentUser.getPhoneNumber();
+        }
+
         mUserRef = mFirebaseRef.getmUserRef().child(mUserPhoneNumber);
 
         mUserRef.addValueEventListener(new ValueEventListener() {
@@ -280,16 +281,17 @@ public class VerificationActivity extends AppCompatActivity {
 
                     mUserType = String.valueOf(dataSnapshot.child("mUserType").getValue());
 
-                    if(mUserType.equals("Rider")){
+                    if (mUserType.equals("Rider")) {
 
-                        mHelperFile.screenIntent(VerificationActivity.this, HomeActivity.class,mUserPhoneNumber);
+                        mHelperFile.screenIntent(VerificationActivity.this, HomeActivity.class, mUserPhoneNumber);
                     }
-                }else{
+                } else {
 
-                    mUser = new User("Guest", "", mCurrentUser.getPhoneNumber(), "", "", "", "", "", "Rider");
+                    mUser = new User("Guest", "", mUserPhoneNumber, "", "", "", "", "", "Rider");
                     mUserRef.setValue(mUser);
+
                     mProgressBar.setVisibility(View.GONE);
-                    mHelperFile.screenIntent(VerificationActivity.this, HomeActivity.class,mUserPhoneNumber);
+                    mHelperFile.screenIntent(VerificationActivity.this, HomeActivity.class, mUserPhoneNumber);
                     finish();
                 }
             }
@@ -297,7 +299,7 @@ public class VerificationActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                Log.d("TAGUser:",databaseError.getDetails());
+                Log.d("TAGUser:", databaseError.getDetails());
             }
         });
     }

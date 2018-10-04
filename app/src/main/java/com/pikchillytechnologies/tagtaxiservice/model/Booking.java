@@ -13,12 +13,16 @@ public class Booking {
     private String mReturningOnDate;
     private String mVehicleType;
     private String mPickupTime;
+    private String mBookingStatus;
+    private String mReason;
+
+
 
     public Booking() {
         /*Blank default constructor essential for Firebase*/
     }
 
-    public Booking(String pickupAddress, String dropAddress, String numberOfPassengers, String roundTrip, String travellingOnDate, String returningOnDate, String vehicleType, String pickupTime){
+    public Booking(String pickupAddress, String dropAddress, String numberOfPassengers, String roundTrip, String travellingOnDate, String returningOnDate, String vehicleType, String pickupTime, String bookingStatus, String reason){
 
         this.mPickupAddress = pickupAddress;
         this.mDropAddress = dropAddress;
@@ -28,6 +32,9 @@ public class Booking {
         this.mReturningOnDate = returningOnDate;
         this.mVehicleType = vehicleType;
         this.mPickupTime = pickupTime;
+        this.mBookingStatus = bookingStatus;
+        this.mReason = reason;
+
     }
 
     public String getmPickupAddress() {
@@ -92,5 +99,13 @@ public class Booking {
 
     public void setmPickupTime(String mPickupTime) {
         this.mPickupTime = mPickupTime;
+    }
+
+    public String getmBookingStatus() {
+        return mBookingStatus;
+    }
+
+    public String getmReason() {
+        return mReason;
     }
 }

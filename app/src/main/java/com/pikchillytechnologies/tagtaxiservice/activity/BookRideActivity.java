@@ -33,6 +33,7 @@ import com.pikchillytechnologies.tagtaxiservice.R;
 import com.pikchillytechnologies.tagtaxiservice.helperfile.FirebaseRef;
 import com.pikchillytechnologies.tagtaxiservice.helperfile.HelperFile;
 import com.pikchillytechnologies.tagtaxiservice.model.Booking;
+
 import java.util.Calendar;
 
 import java.util.ArrayList;
@@ -111,10 +112,13 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
     private FirebaseRef mFirebaseRef;
     private DatabaseReference mBookingRef;
+    private DatabaseReference mUserBookingRef;
     private Booking mBooking;
     private Boolean mBookingFlag;
     private Boolean mTravelDateFlag;
     private Boolean mReturnDateFlag;
+    private String mBookingStatus;
+    private String mReason;
 
     private DatePicker datePicker;
     private Calendar calendar;
@@ -134,10 +138,16 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
         mTravelDateFlag = false;
         mReturnDateFlag = false;
+        mBookingStatus = "Pending";
+        mReason = "";
+
+        mNumberOfPassengers = "1";
+        mPassenger_1.setBackgroundResource(R.drawable.btn_bg_green_round);
+        mPassenger_1.setTextColor(getResources().getColor(R.color.colorWhite));
 
         mUserBundle = getIntent().getExtras();
 
-        if(mUserBundle != null){
+        if (mUserBundle != null) {
             mUserPhoneNumber = mUserBundle.getString("Phone");
         }
 
@@ -153,31 +163,31 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
         // Set the values
         setValues();
 
-        for (int i = 1; i <= 12; i++){
+        for (int i = 1; i <= 12; i++) {
             mTime.add(String.valueOf(i));
         }
-     
-        mTimeAdapter = new ArrayAdapter<>(this,R.layout.spinner_time_item,mTime);
+
+        mTimeAdapter = new ArrayAdapter<>(this, R.layout.spinner_time_item, mTime);
         mTimeSpinner.setAdapter(mTimeAdapter);
 
     }
 
     @OnClick(R.id.button_TravellingOnDate)
-    public void onTravelDateClick(){
+    public void onTravelDateClick() {
         setDate("TravelDate");
         mTravellingOnDate = String.valueOf(mTravellingOnDateButton.getText());
-        setButton(mTravellingOnDateButton,R.drawable.btn_big_bg_green,Color.WHITE);
+        setButton(mTravellingOnDateButton, R.drawable.btn_big_bg_green, Color.WHITE);
 
     }
 
     @OnClick(R.id.button_ReturningOnDate)
-    public void onReturnDateClick(){
+    public void onReturnDateClick() {
         setDate("ReturnDate");
         mReturningOnDate = String.valueOf(mReturningOnDateButton.getText());
-        setButton(mReturningOnDateButton,R.drawable.btn_big_bg_green,Color.WHITE);
+        setButton(mReturningOnDateButton, R.drawable.btn_big_bg_green, Color.WHITE);
     }
 
-    public void setDate(final String mDateButton){
+    public void setDate(final String mDateButton) {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -188,10 +198,10 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
                         String selectedDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
 
-                        if(mDateButton.equals("TravelDate")){
+                        if (mDateButton.equals("TravelDate")) {
                             mTravellingOnDateButton.setText(selectedDate);
 
-                        }else if(mDateButton.equals("ReturnDate")){
+                        } else if (mDateButton.equals("ReturnDate")) {
                             mReturningOnDateButton.setText(selectedDate);
                         }
                     }
@@ -201,7 +211,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
     // Action to perform when Menu button is pressed
     @OnClick(R.id.button_Menu)
-    public void onMenuClick(){
+    public void onMenuClick() {
 
         if (mDrawer.isDrawerOpen(Gravity.START)) {
             mDrawer.closeDrawer(Gravity.START);
@@ -212,52 +222,82 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
     // Action to perform when back button is pressed
     @OnClick(R.id.button_Back)
-    public void onBackButtonClick(View v) {
+    public void onBackButtonClick() {
         mHelperFile.screenIntent(BookRideActivity.this, HomeActivity.class);
     }
 
     // Action to perform when Book button is clicked
     @OnClick(R.id.button_Book)
-    public void onBookButtonClick(View v) {
-
-        updateBooking();
-
-        if(mBookingFlag) {
-            mHelperFile.screenToast(BookRideActivity.this, R.string.book_request, Toast.LENGTH_LONG);
-            mHelperFile.screenIntent(BookRideActivity.this, BookingStatusActivity.class);
-        }
-    }
-
-    /**
-     * Function to Update Booking in Firebase
-     * */
-    public void updateBooking(){
+    public void onBookButtonClick() {
 
         mPickupAddress = String.valueOf(mPickupAddressEditText.getText());
         mDropAddress = String.valueOf(mDropAddressEditText.getText());
         mTravellingOnDate = String.valueOf(mTravellingOnDateButton.getText());
         mReturningOnDate = String.valueOf(mReturningOnDateButton.getText());
 
-        if(mPickupAddress.isEmpty()){
-            Toast.makeText(this,"Please enter Pickup Address",Toast.LENGTH_LONG).show();
-        }else if(mDropAddress.isEmpty()){
-            Toast.makeText(this,"Please enter Drop Address",Toast.LENGTH_LONG).show();
-        }else if(mNumberOfPassengers.isEmpty()){
-            Toast.makeText(this,"Please select Number of Passengers",Toast.LENGTH_LONG).show();
-        }else if(mTravellingOnDate.isEmpty()){
-            Toast.makeText(this,"Please enter Travel Date",Toast.LENGTH_LONG).show();
-        }else if(mReturningOnDate.isEmpty() && mRoundTrip.equals("Yes")){
-            Toast.makeText(this,"Please enter Return date",Toast.LENGTH_LONG).show();
-        }else if(mAMPM.isEmpty()){
-            Toast.makeText(this,"Please select Pickup Time",Toast.LENGTH_LONG).show();
-        }else{
+        checkBookingData();
 
-            mBookingId = String.valueOf(mFirebaseRef.getmBookingRef().child(mUserPhoneNumber).push().getKey());
-            mBookingRef = mFirebaseRef.getmBookingRef().child(mUserPhoneNumber).child(mBookingId);
+        if (mBookingFlag) {
+            mHelperFile.screenToast(BookRideActivity.this, R.string.book_request, Toast.LENGTH_LONG);
+            mHelperFile.screenIntent(BookRideActivity.this, BookingStatusActivity.class);
+        } else {
+            Toast.makeText(this, "Error Occured. Please Try Again", Toast.LENGTH_LONG).show();
+        }
+    }
 
-            mBooking = new Booking(mPickupAddress,mDropAddress,mNumberOfPassengers,mRoundTrip,mTravellingOnDate,mReturningOnDate,mVehicleType,mPickupTime+mAMPM);
+    /**
+     * Function to Update Booking in Firebase
+     */
+    public void checkBookingData() {
+
+        Boolean saveFlag;
+
+        if (mPickupAddress.trim().isEmpty()) {
+            saveFlag = false;
+            Toast.makeText(this, "Please enter Pickup Address", Toast.LENGTH_LONG).show();
+
+        } else if (mDropAddress.trim().isEmpty()) {
+            saveFlag = false;
+            Toast.makeText(this, "Please enter Drop Address", Toast.LENGTH_LONG).show();
+
+        } else if (mTravellingOnDate.isEmpty()) {
+            saveFlag = false;
+            Toast.makeText(this, "Please enter Travel Date", Toast.LENGTH_LONG).show();
+        } else if (mReturningOnDate.isEmpty() && mRoundTrip.equals("Yes")) {
+            saveFlag = false;
+            Toast.makeText(this, "Please enter Return date", Toast.LENGTH_LONG).show();
+        } else if (mAMPM.isEmpty()) {
+            saveFlag = false;
+            Toast.makeText(this, "Please select Pickup Time", Toast.LENGTH_LONG).show();
+        } else {
+            saveFlag = true;
+        }
+
+        if (saveFlag) {
+            updateFirebase();
+        } else {
+            Toast.makeText(this, "Booking could not be completed. Please fill complete information", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void updateFirebase() {
+
+        try {
+            mBookingId = String.valueOf(mFirebaseRef.getmBookingRef().push().getKey());
+
+            // Save data in Booking table
+            mBookingRef = mFirebaseRef.getmBookingRef().child(mBookingId);
+
+            mBooking = new Booking(mPickupAddress, mDropAddress, mNumberOfPassengers, mRoundTrip, mTravellingOnDate, mReturningOnDate, mVehicleType, mTimeSelected + mAMPM, mBookingStatus, mReason);
             mBookingRef.setValue(mBooking);
+
+            // Save data in UserBooking Table
+            mFirebaseRef.getmUserBookingRef().child(mUserPhoneNumber).child(mBookingId).setValue("Yes");
+
             mBookingFlag = true;
+        } catch (Exception e) {
+            Log.d("TagFirebaseError:", e.getLocalizedMessage());
+            mBookingFlag = false;
         }
     }
 
@@ -271,7 +311,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
         switch (buttonTag) {
             case "Yes":
                 mRoundTrip = "Yes";
-                mTravelDateFlag=true;
+                mTravelDateFlag = true;
                 mReturnDateFlag = true;
                 setButton(mYesButton, R.drawable.btn_big_bg_green, Color.WHITE);
                 setButton(mNoButton, R.drawable.btn_big_bg_trans, Color.GRAY);
@@ -282,8 +322,9 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 break;
             case "No":
                 mRoundTrip = "No";
-                mTravelDateFlag=true;
+                mTravelDateFlag = true;
                 mReturnDateFlag = false;
+                mReturningOnDate = "";
                 setButton(mNoButton, R.drawable.btn_big_bg_green, Color.WHITE);
                 setButton(mYesButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 mReturningOnDateButton.setEnabled(false);
@@ -322,7 +363,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mAMButton, R.drawable.btn_big_bg_trans, Color.GRAY);
                 break;
             case "1":
-                mPickupTime = "1";
+                mNumberOfPassengers = "1";
                 setButton(mPassenger_1, R.drawable.btn_bg_green_round, Color.WHITE);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
@@ -331,7 +372,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "2":
-                mPickupTime = "2";
+                mNumberOfPassengers = "2";
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_green_round, Color.WHITE);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
@@ -340,7 +381,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "3":
-                mPickupTime = "3";
+                mNumberOfPassengers = "3";
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_green_round, Color.WHITE);
@@ -349,7 +390,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "4":
-                mPickupTime = "4";
+                mNumberOfPassengers = "4";
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
@@ -358,7 +399,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "5":
-                mPickupTime = "5";
+                mNumberOfPassengers = "5";
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
@@ -367,7 +408,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
                 setButton(mPassenger_6, R.drawable.btn_bg_transp_round, Color.GRAY);
                 break;
             case "6":
-                mPickupTime = "6";
+                mNumberOfPassengers = "6";
                 setButton(mPassenger_1, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_2, R.drawable.btn_bg_transp_round, Color.GRAY);
                 setButton(mPassenger_3, R.drawable.btn_bg_transp_round, Color.GRAY);
@@ -426,7 +467,6 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
         mReturningOnDateButton.setEnabled(true);
         mTimeSpinner.setOnItemSelectedListener(this);
         mTimeSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-
     }
 
     @Override
@@ -439,6 +479,6 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-        Log.i("TimeNotSelected","Time was not selected");
+        Log.i("TimeNotSelected", "Time was not selected");
     }
 }

@@ -13,8 +13,9 @@ public class FirebaseRef {
     private DatabaseReference mDatabaseRef;
     private DatabaseReference mUserRef;
     private DatabaseReference mBookingRef;
+    private DatabaseReference mUserBookingRef;
 
-    public FirebaseRef(){
+    public FirebaseRef() {
 
         mAuthRef = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
@@ -22,6 +23,7 @@ public class FirebaseRef {
         // User Table Reference in Firebase
         mUserRef = mDatabaseRef.child("Users/");
         mBookingRef = mDatabaseRef.child("Booking/");
+        mUserBookingRef = mDatabaseRef.child("UserBooking/");
 
     }
 
@@ -39,5 +41,9 @@ public class FirebaseRef {
 
     public DatabaseReference getmBookingRef() {
         return mBookingRef;
+    }
+
+    public DatabaseReference getmUserBookingRef() {
+        return mUserBookingRef;
     }
 }
