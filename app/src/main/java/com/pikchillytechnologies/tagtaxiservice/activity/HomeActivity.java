@@ -99,13 +99,13 @@ public class HomeActivity extends FragmentActivity implements OnMapReadyCallback
     // Action to perform when Book Ride is clicked
     @OnClick(R.id.button_BookRide)
     public void onBookRideClick(){
-        mHelperFile.screenIntent(HomeActivity.this, BookRideActivity.class,mUserPhoneNumber);
+        mHelperFile.screenIntent(HomeActivity.this, BookRideActivity.class, mUserPhoneNumber);
     }
 
     // Action to perform when Booking status is clicked
     @OnClick(R.id.button_BookingStatus)
     public void onBookingStatusClick(){
-        mHelperFile.screenIntent(HomeActivity.this, BookingStatusActivity.class);
+        mHelperFile.screenIntent(HomeActivity.this, BookingStatusActivity.class, mUserPhoneNumber);
     }
 
     /**
@@ -217,9 +217,13 @@ public class HomeActivity extends FragmentActivity implements OnMapReadyCallback
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
 
             mLastKnownLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            userLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+            try {
+                userLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+            }catch (Exception e){
+                Log.e("TAGError:",e.getLocalizedMessage());
+            }
         }
 
         if (Build.VERSION.SDK_INT < 23) {

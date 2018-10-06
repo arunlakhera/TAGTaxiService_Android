@@ -28,7 +28,7 @@ public class User{
         this.mAddress = address;
         this.mCity = city;
         this.mState = state;
-        this.mPhoneNumber = photo;
+        this.mPhoto = photo;
         this.mUserType = userType;
     }
 

@@ -13,10 +13,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pikchillytechnologies.tagtaxiservice.R;
 import com.pikchillytechnologies.tagtaxiservice.adapter.BookingStatusAdapter;
+import com.pikchillytechnologies.tagtaxiservice.helperfile.FirebaseRef;
 import com.pikchillytechnologies.tagtaxiservice.helperfile.HelperFile;
 import com.pikchillytechnologies.tagtaxiservice.model.Booking;
 
@@ -52,27 +59,39 @@ public class BookingStatusActivity extends AppCompatActivity implements Navigati
 
         if(mUserBundle != null){
             mUserPhoneNumber = mUserBundle.getString("Phone");
+        }else{
+            Toast.makeText(BookingStatusActivity.this,"No Phone Number Try Again!", Toast.LENGTH_LONG).show();
         }
-        
+
         mNavigationView.setNavigationItemSelectedListener(this);
         mScreenTitle_TextView.setText(R.string.screen_booking_status);
 
-        RecyclerView rvBooking = findViewById(R.id.recyclerView_BookingStatus);
-        //Booking b1 = new Booking("Pickup", "Drop", "2", "Yes", "01-01-0001", "02-02-0002", "SUV", "10am", "Pending","");
+        updateUI();
+
+    }
+
+    public void updateUI(){
+
+        RecyclerView mBookingRecyclerView = findViewById(R.id.recyclerView_BookingStatus);
+        
         mUserBookings = new ArrayList<>();
-        mUserBookings.add(new Booking("Pickup", "Drop", "2", "Yes", "01-01-0001", "02-02-0002", "SUV", "10am", "Pending",""));
 
-        BookingStatusAdapter adapter = new BookingStatusAdapter(mUserBookings);
+        mUserBookings.add(new Booking(mUserPhoneNumber,"1101 Ashok Nagar, New Delhi", "Rajendra Nagar, Dehradun", "2", "Yes", "01-10-2018", "02-10-2018", "Sedan - Toyota Etios", "10am", "Pending",""));
+        mUserBookings.add(new Booking(mUserPhoneNumber,"1101 Ashok Nagar, New Delhi", "Rajendra Nagar, Dehradun", "2", "Yes", "10-10-2018", "12-10-2018", "SUV - Toyota Innova", "10am", "Pending",""));
+        mUserBookings.add(new Booking(mUserPhoneNumber,"1101 Ashok Nagar, New Delhi", "Rajendra Nagar, Dehradun", "2", "Yes", "21-10-2018", "22-10-2018", "Small - Maruti Ritz", "10am", "Pending",""));
+        mUserBookings.add(new Booking(mUserPhoneNumber,"1101 Ashok Nagar, New Delhi", "Rajendra Nagar, Dehradun", "2", "Yes", "01-11-2018", "02-11-2018", "SUV", "10am", "Pending",""));
+
+        BookingStatusAdapter mBookingAdapter = new BookingStatusAdapter(mUserBookings);
         // Attach the adapter to the recyclerview to populate items
-        rvBooking.setAdapter(adapter);
-        // Set layout manager to position the items
-        rvBooking.setLayoutManager(new LinearLayoutManager(this));
+        mBookingRecyclerView.setAdapter(mBookingAdapter);
 
+        // Set layout manager to position the items
+        mBookingRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @OnClick(R.id.button_Back)
     public void onBackButtonClick(){
-        mHelperFile.screenIntent(BookingStatusActivity.this, HomeActivity.class,mUserPhoneNumber);
+        mHelperFile.screenIntent(BookingStatusActivity.this, HomeActivity.class, mUserPhoneNumber);
     }
 
     @OnClick(R.id.button_Menu)

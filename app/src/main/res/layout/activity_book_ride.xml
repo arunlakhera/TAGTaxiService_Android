@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:contentDescription="@string/logo_image"
                     android:id="@+id/imageView_Logo"
                     android:layout_width="@dimen/logo_bg_width"
                     android:layout_height="@dimen/logo_bg_height"
@@ -67,6 +68,7 @@
 
                     <EditText
                         android:id="@+id/editText_PickupAddress"
+                        android:hint="@string/pickup_add_hint"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/margin_lar"
@@ -103,6 +105,7 @@
                         android:textSize="@dimen/text_small" />
 
                     <EditText
+                        android:hint="@string/drop_add_hint"
                         android:id="@+id/editText_DropAddress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -626,7 +629,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorButtonOrange"
+            android:background="@android:color/holo_green_dark"
             android:text="@string/button_book"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
@@ -641,7 +644,7 @@
             android:background="@android:color/white"
             app:elevation="@dimen/card_elevation"
             app:headerLayout="@layout/navigation_header"
-            app:itemIconTint="@color/colorButtonOrange"
+            app:itemIconTint="@android:color/holo_green_dark"
             app:menu="@menu/drawer_menu" />
 
 </android.support.v4.widget.DrawerLayout>

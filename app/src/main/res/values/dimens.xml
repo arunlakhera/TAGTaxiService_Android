@@ -52,5 +52,7 @@
     <dimen name="layout_vehicle_height">40dp</dimen>
     <dimen name="layout_time_height">35dp</dimen>
     <dimen name="layout_height_default">40dp</dimen>
+    <dimen name="layout_width_default">40dp</dimen>
+    <dimen name="layout_height_booking">100dp</dimen>
 
 </resources>

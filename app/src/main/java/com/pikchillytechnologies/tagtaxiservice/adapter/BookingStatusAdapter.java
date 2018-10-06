@@ -11,33 +11,31 @@ import android.widget.TextView;
 import com.pikchillytechnologies.tagtaxiservice.R;
 import com.pikchillytechnologies.tagtaxiservice.model.Booking;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdapter.ViewHolder> {
 
+    private List<Booking> mBooking;
+
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView mTravellingOnDateTextView;
-        public TextView mReturningOnDateTextView;
-        public TextView mStatusTextView;
-        public TextView mPickupAddress;
-        public TextView mDropAddress;
+        private TextView mTravelReturnDateTextView;
+        private TextView mPickupAddress;
+        private TextView mDropAddress;
+        private TextView mVehicleTypeTextView;
+        private TextView mStatusTextView;
 
-        public ViewHolder(View itemView){
+        private ViewHolder(View itemView){
             super(itemView);
 
-            mTravellingOnDateTextView = itemView.findViewById(R.id.textView_TravellingOnDate);
-            mReturningOnDateTextView = itemView.findViewById(R.id.textView_ReturningOnDate);
-            mStatusTextView = itemView.findViewById(R.id.textView_Status);
+            mTravelReturnDateTextView = itemView.findViewById(R.id.textView_TravelReturnDate);
             mPickupAddress = itemView.findViewById(R.id.textView_PickupAddress);
             mDropAddress = itemView.findViewById(R.id.textView_DropAddress);
+            mVehicleTypeTextView = itemView.findViewById(R.id.textView_VehicleType);
+            mStatusTextView = itemView.findViewById(R.id.textView_Status);
 
         }
     }
-
-    private List<Booking> mBooking;
 
     public BookingStatusAdapter(List<Booking> booking){
         mBooking = booking;
@@ -64,14 +62,9 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         Booking booking = mBooking.get(position);
 
         // Set item views based on your views and data model
-        TextView travellingOnDateTextView = holder.mTravellingOnDateTextView;
-        travellingOnDateTextView.setText(booking.getmTravellingOnDate());
-
-        TextView returningOnDateTextView = holder.mReturningOnDateTextView;
-        returningOnDateTextView.setText(booking.getmReturningOnDate());
-
-        TextView statusTextView = holder.mStatusTextView;
-        statusTextView.setText(booking.getmBookingStatus());
+        TextView travellingOnDateTextView = holder.mTravelReturnDateTextView;
+        String travelDate = booking.getmTravellingOnDate() + " To " + booking.getmReturningOnDate();
+        travellingOnDateTextView.setText(travelDate);
 
         TextView pickupAddress = holder.mPickupAddress;
         pickupAddress.setText(booking.getmPickupAddress());
@@ -79,10 +72,20 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         TextView dropAddress = holder.mDropAddress;
         dropAddress.setText(booking.getmDropAddress());
 
+        TextView vehicleType = holder.mVehicleTypeTextView;
+        vehicleType.setText(booking.getmVehicleType());
+
+        TextView statusTextView = holder.mStatusTextView;
+        statusTextView.setText(booking.getmBookingStatus());
+
     }
 
     @Override
     public int getItemCount() {
-        return mBooking.size();
+        if(mBooking != null && mBooking.size() > 0){
+            return mBooking.size();
+        }else{
+            return 0;
+        }
     }
 }

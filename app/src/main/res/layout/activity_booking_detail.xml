@@ -35,7 +35,7 @@ tools:openDrawer="start">
     android:background="@android:color/white"
     app:elevation="4dp"
     app:headerLayout="@layout/navigation_header"
-    app:itemIconTint="@color/colorButtonOrange"
+    app:itemIconTint="@android:color/holo_green_dark"
     app:menu="@menu/drawer_menu" />
 
 </android.support.v4.widget.DrawerLayout>

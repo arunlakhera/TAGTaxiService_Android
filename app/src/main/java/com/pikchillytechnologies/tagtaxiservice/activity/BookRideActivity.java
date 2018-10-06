@@ -149,6 +149,8 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
         if (mUserBundle != null) {
             mUserPhoneNumber = mUserBundle.getString("Phone");
+        }else{
+            Toast.makeText(BookRideActivity.this,"No Phone Number Try Again!", Toast.LENGTH_LONG).show();
         }
 
         calendar = Calendar.getInstance();
@@ -223,7 +225,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
     // Action to perform when back button is pressed
     @OnClick(R.id.button_Back)
     public void onBackButtonClick() {
-        mHelperFile.screenIntent(BookRideActivity.this, HomeActivity.class);
+        mHelperFile.screenIntent(BookRideActivity.this, HomeActivity.class, mUserPhoneNumber);
     }
 
     // Action to perform when Book button is clicked
@@ -239,7 +241,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
 
         if (mBookingFlag) {
             mHelperFile.screenToast(BookRideActivity.this, R.string.book_request, Toast.LENGTH_LONG);
-            mHelperFile.screenIntent(BookRideActivity.this, BookingStatusActivity.class);
+            mHelperFile.screenIntent(BookRideActivity.this, BookingStatusActivity.class, mUserPhoneNumber);
         } else {
             mHelperFile.screenToast(BookRideActivity.this,R.string.booking_error,Toast.LENGTH_LONG);
         }
@@ -290,7 +292,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
             // Save data in Booking table
             mBookingRef = mFirebaseRef.getmBookingRef().child(mBookingId);
 
-            mBooking = new Booking(mPickupAddress, mDropAddress, mNumberOfPassengers, mRoundTrip, mTravellingOnDate, mReturningOnDate, mVehicleType, mTimeSelected + mAMPM, mBookingStatus, mReason);
+            mBooking = new Booking(mUserPhoneNumber, mPickupAddress, mDropAddress, mNumberOfPassengers, mRoundTrip, mTravellingOnDate, mReturningOnDate, mVehicleType, mTimeSelected + mAMPM, mBookingStatus, mReason);
             mBookingRef.setValue(mBooking);
 
             // Save data in UserBooking Table

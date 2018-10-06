@@ -99,7 +99,9 @@
     <string name="pickup_time_error">Please select Pickup Time</string>
     <string name="booking_complete_error">Booking could not be completed. Please fill complete information</string>
 
-
+    <string name="toolbar_menu_desc">Toolbar Menu Button</string>
+    <string name="navi_user_image">Navigation User Image</string>
+    <string name="driver_image">Driver Image</string>
 
     <string name="button_history">History</string>
     <string name="button_recent">Recent</string>

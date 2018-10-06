@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/menu_header_height"
-    android:background="@color/colorCardView"
+    android:background="@android:color/holo_green_dark"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="@dimen/padding_lar"
@@ -11,6 +11,7 @@
     >
 
     <ImageView
+        android:contentDescription="@string/navi_user_image"
         android:id="@+id/imageView_User_Image"
         android:layout_width="@dimen/profile_pic_width"
         android:layout_height="@dimen/profile_pic_height"
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/padding_med"
         android:text="@string/menu_user_guest"
+        android:textColor="@color/colorWhite"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         />
 
@@ -32,6 +34,7 @@
         android:id="@+id/textView_Phone_Number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
         android:paddingTop="@dimen/padding_med"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         />
