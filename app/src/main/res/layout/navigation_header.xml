@@ -16,10 +16,18 @@
         android:layout_width="@dimen/profile_pic_width"
         android:layout_height="@dimen/profile_pic_height"
         android:src="@drawable/my_profile_icon"
-        android:scaleType="fitXY"
-        android:layout_marginTop="@dimen/margin_vlar"
-        />
 
+        />
+    <!--
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:contentDescription="@string/navi_user_image"
+        android:id="@+id/imageView_User_Image"
+        android:layout_width="@dimen/profile_pic_width"
+        android:layout_height="@dimen/profile_pic_height"
+        android:src="@drawable/my_profile_icon"
+        android:layout_weight="1"
+        />
+        -->
     <TextView
         android:id="@+id/textView_User_Name"
         android:layout_width="wrap_content"

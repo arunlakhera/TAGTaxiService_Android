@@ -17,6 +17,7 @@ import com.pikchillytechnologies.tagtaxiservice.R;
 import com.pikchillytechnologies.tagtaxiservice.helperfile.HelperFile;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class BookingDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,12 +31,12 @@ public class BookingDetailActivity extends AppCompatActivity implements Navigati
 
     private HelperFile mHelperFile;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_detail);
 
+        ButterKnife.bind(this);
         mHelperFile = new HelperFile();
 
         mNavigationView.setNavigationItemSelectedListener(this);

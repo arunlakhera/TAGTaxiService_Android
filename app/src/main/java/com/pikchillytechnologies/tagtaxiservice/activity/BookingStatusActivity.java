@@ -7,19 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pikchillytechnologies.tagtaxiservice.R;
 import com.pikchillytechnologies.tagtaxiservice.adapter.BookingStatusAdapter;
@@ -33,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BookingStatusActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
+public class BookingStatusActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     @BindView(R.id.textView_ScreenTitle)
     TextView mScreenTitle_TextView;
@@ -41,11 +38,20 @@ public class BookingStatusActivity extends AppCompatActivity implements Navigati
     DrawerLayout mDrawer;
     @BindView(R.id.navigation_view)
     NavigationView mNavigationView;
+    @BindView(R.id.recyclerView_BookingStatus)
+    RecyclerView mBookingRecyclerView;
 
     private Bundle mUserBundle;
     private String mUserPhoneNumber;
     private HelperFile mHelperFile;
     ArrayList<Booking> mUserBookings;
+    BookingStatusAdapter mBookingAdapter;
+
+    private FirebaseRef mDatabaseRef;
+    private DatabaseReference mUserBookingRef;
+    private DatabaseReference mBookingRef;
+    private String mBookingId;
+    Booking mBooking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,10 @@ public class BookingStatusActivity extends AppCompatActivity implements Navigati
         mHelperFile = new HelperFile();
 
         mUserBundle = getIntent().getExtras();
+
+        mDatabaseRef = new FirebaseRef();
+        mUserBookingRef = mDatabaseRef.getmUserBookingRef();
+        mBookingRef = mDatabaseRef.getmBookingRef();
 
         if(mUserBundle != null){
             mUserPhoneNumber = mUserBundle.getString("Phone");
@@ -72,21 +82,56 @@ public class BookingStatusActivity extends AppCompatActivity implements Navigati
 
     public void updateUI(){
 
-        RecyclerView mBookingRecyclerView = findViewById(R.id.recyclerView_BookingStatus);
-        
         mUserBookings = new ArrayList<>();
 
-        mUserBookings.add(new Booking(mUserPhoneNumber,"1101 Ashok Nagar, New Delhi", "Rajendra Nagar, Dehradun", "2", "Yes", "01-10-2018", "02-10-2018", "Sedan - Toyota Etios", "10am", "Pending",""));
-        mUserBookings.add(new Booking(mUserPhoneNumber,"1101 Ashok Nagar, New Delhi", "Rajendra Nagar, Dehradun", "2", "Yes", "10-10-2018", "12-10-2018", "SUV - Toyota Innova", "10am", "Pending",""));
-        mUserBookings.add(new Booking(mUserPhoneNumber,"1101 Ashok Nagar, New Delhi", "Rajendra Nagar, Dehradun", "2", "Yes", "21-10-2018", "22-10-2018", "Small - Maruti Ritz", "10am", "Pending",""));
-        mUserBookings.add(new Booking(mUserPhoneNumber,"1101 Ashok Nagar, New Delhi", "Rajendra Nagar, Dehradun", "2", "Yes", "01-11-2018", "02-11-2018", "SUV", "10am", "Pending",""));
+        mUserBookingRef.child(mUserPhoneNumber).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot userBookingSnapshot) {
 
-        BookingStatusAdapter mBookingAdapter = new BookingStatusAdapter(mUserBookings);
-        // Attach the adapter to the recyclerview to populate items
-        mBookingRecyclerView.setAdapter(mBookingAdapter);
+                if(userBookingSnapshot.getChildrenCount() < 1){
+                    Toast.makeText(BookingStatusActivity.this,"No User Bookings ", Toast.LENGTH_LONG).show();
 
-        // Set layout manager to position the items
-        mBookingRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+                }else{
+
+                    for(DataSnapshot userBookingList : userBookingSnapshot.getChildren()){
+
+                        mBookingId = userBookingList.getKey();
+
+                        if(mBookingId != null){
+
+                            mBookingRef.child(mBookingId).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                    mBooking = dataSnapshot.getValue(Booking.class);
+
+                                    mUserBookings.add(new Booking(mBookingId,mBooking.getmUserPhoneNumber(),mBooking.getmPickupAddress(),mBooking.getmDropAddress(),mBooking.getmNumberOfPassengers(),mBooking.getmRoundTrip(),mBooking.getmTravellingOnDate(),mBooking.getmReturningOnDate(),mBooking.getmVehicleType(),mBooking.getmPickupTime(),mBooking.getmBookingStatus(),mBooking.getmReason()));
+                                    mBookingAdapter = new BookingStatusAdapter(mUserBookings);
+
+                                    // Attach the adapter to the recyclerview to populate items
+                                    mBookingRecyclerView.setAdapter(mBookingAdapter);
+
+                                    // Set layout manager to position the items
+                                    mBookingRecyclerView.setLayoutManager(new LinearLayoutManager(BookingStatusActivity.this));
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    Log.e("TAGUserBookingError:", databaseError.getDetails());
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("TAGUserBookingError:", databaseError.getDetails());
+            }
+        });
     }
 
     @OnClick(R.id.button_Back)

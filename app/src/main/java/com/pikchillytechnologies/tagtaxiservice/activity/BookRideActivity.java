@@ -125,6 +125,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
     private int mCurrentYear;
     private int mCurrentMonth;
     private int mCurrentDay;
+    Boolean saveFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,12 +136,12 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
         mHelperFile = new HelperFile();
         mFirebaseRef = new FirebaseRef();
         mBookingFlag = false;
-
+        mRoundTrip = getResources().getString(R.string.yes);
         mTravelDateFlag = false;
         mReturnDateFlag = false;
         mBookingStatus = getResources().getString(R.string.pending_status);
         mReason = "";
-
+        mAMPM = "";
         mNumberOfPassengers = "1";
         mPassenger_1.setBackgroundResource(R.drawable.btn_bg_green_round);
         mPassenger_1.setTextColor(getResources().getColor(R.color.colorWhite));
@@ -252,29 +253,20 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
      */
     public void checkBookingData() {
 
-        Boolean saveFlag;
+        saveFlag = true;
 
-        if (mPickupAddress.trim().isEmpty()) {
+        if (mPickupAddress.trim().isEmpty() || mPickupAddress == null) {
             saveFlag = false;
-            mHelperFile.screenToast(BookRideActivity.this,R.string.pickup_error,Toast.LENGTH_LONG);
-
-        } else if (mDropAddress.trim().isEmpty()) {
+        } else if (mDropAddress.trim().isEmpty() || mDropAddress == null) {
             saveFlag = false;
-            mHelperFile.screenToast(BookRideActivity.this,R.string.drop_error,Toast.LENGTH_LONG);
-
-        } else if (mTravellingOnDate.isEmpty()) {
+        } else if (mTravellingOnDate.isEmpty() || mTravellingOnDateButton == null) {
             saveFlag = false;
-            mHelperFile.screenToast(BookRideActivity.this,R.string.travel_error,Toast.LENGTH_LONG);
-
-        } else if (mReturningOnDate.isEmpty() && mRoundTrip.equals(getResources().getString(R.string.yes))) {
-            saveFlag = false;
-            mHelperFile.screenToast(BookRideActivity.this,R.string.return_error,Toast.LENGTH_LONG);
-
         } else if (mAMPM.isEmpty()) {
             saveFlag = false;
-            mHelperFile.screenToast(BookRideActivity.this,R.string.pickup_time_error,Toast.LENGTH_LONG);
-        } else {
-            saveFlag = true;
+        }else if (mRoundTrip.equals(getResources().getString(R.string.yes))) {
+            if (mReturningOnDate.isEmpty() || mReturningOnDate == null) {
+                saveFlag = false;
+            }
         }
 
         if (saveFlag) {
@@ -292,7 +284,11 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
             // Save data in Booking table
             mBookingRef = mFirebaseRef.getmBookingRef().child(mBookingId);
 
-            mBooking = new Booking(mUserPhoneNumber, mPickupAddress, mDropAddress, mNumberOfPassengers, mRoundTrip, mTravellingOnDate, mReturningOnDate, mVehicleType, mTimeSelected + mAMPM, mBookingStatus, mReason);
+            if(mRoundTrip.equals("No")){
+                mReturningOnDate = "";
+            }
+
+            mBooking = new Booking(mBookingId,mUserPhoneNumber, mPickupAddress, mDropAddress, mNumberOfPassengers, mRoundTrip, mTravellingOnDate, mReturningOnDate, mVehicleType, mTimeSelected + mAMPM, mBookingStatus, mReason);
             mBookingRef.setValue(mBooking);
 
             // Save data in UserBooking Table

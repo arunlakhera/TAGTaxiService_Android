@@ -1,14 +1,17 @@
 package com.pikchillytechnologies.tagtaxiservice.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pikchillytechnologies.tagtaxiservice.R;
+import com.pikchillytechnologies.tagtaxiservice.activity.BookingDetailActivity;
 import com.pikchillytechnologies.tagtaxiservice.model.Booking;
 
 import java.util.List;
@@ -16,6 +19,8 @@ import java.util.List;
 public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdapter.ViewHolder> {
 
     private List<Booking> mBooking;
+    Context context;
+    Booking booking;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -24,6 +29,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         private TextView mDropAddress;
         private TextView mVehicleTypeTextView;
         private TextView mStatusTextView;
+        LinearLayout layoutParent;
 
         private ViewHolder(View itemView){
             super(itemView);
@@ -33,18 +39,20 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             mDropAddress = itemView.findViewById(R.id.textView_DropAddress);
             mVehicleTypeTextView = itemView.findViewById(R.id.textView_VehicleType);
             mStatusTextView = itemView.findViewById(R.id.textView_Status);
+            layoutParent = itemView.findViewById(R.id.layout_Parent);
 
         }
     }
 
     public BookingStatusAdapter(List<Booking> booking){
+
         mBooking = booking;
     }
 
     @Override
     public BookingStatusAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
@@ -56,14 +64,17 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         // Get the data model based on position
-        Booking booking = mBooking.get(position);
+        booking = mBooking.get(position);
+        String travelDate;
 
         // Set item views based on your views and data model
         TextView travellingOnDateTextView = holder.mTravelReturnDateTextView;
-        String travelDate = booking.getmTravellingOnDate() + " To " + booking.getmReturningOnDate();
+
+        travelDate = booking.getmTravellingOnDate() + " To " + booking.getmReturningOnDate();
+
         travellingOnDateTextView.setText(travelDate);
 
         TextView pickupAddress = holder.mPickupAddress;
@@ -77,6 +88,16 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
 
         TextView statusTextView = holder.mStatusTextView;
         statusTextView.setText(booking.getmBookingStatus());
+
+        holder.layoutParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"You clicked:" + position,Toast.LENGTH_LONG).show();
+
+                Intent bookingDetailIntent = new Intent(context, BookingDetailActivity.class);
+                context.startActivity(bookingDetailIntent);
+            }
+        });
 
     }
 

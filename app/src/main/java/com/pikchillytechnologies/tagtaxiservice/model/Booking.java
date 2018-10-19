@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Booking {
 
+    private String mBookingId;
     private String mUserPhoneNumber;
     private String mPickupAddress;
     private String mDropAddress;
@@ -21,8 +22,9 @@ public class Booking {
         /*Blank default constructor essential for Firebase*/
     }
 
-    public Booking(String userPhoneNumber, String pickupAddress, String dropAddress, String numberOfPassengers, String roundTrip, String travellingOnDate, String returningOnDate, String vehicleType, String pickupTime, String bookingStatus, String reason){
+    public Booking(String bookingId,String userPhoneNumber, String pickupAddress, String dropAddress, String numberOfPassengers, String roundTrip, String travellingOnDate, String returningOnDate, String vehicleType, String pickupTime, String bookingStatus, String reason){
 
+        this.mBookingId = bookingId;
         this.mUserPhoneNumber = userPhoneNumber;
         this.mPickupAddress = pickupAddress;
         this.mDropAddress = dropAddress;
@@ -35,6 +37,14 @@ public class Booking {
         this.mBookingStatus = bookingStatus;
         this.mReason = reason;
 
+    }
+
+    public String getmBookingId() {
+        return mBookingId;
+    }
+
+    public void setmBookingId(String mBookingId) {
+        this.mBookingId = mBookingId;
     }
 
     public String getmUserPhoneNumber() {
