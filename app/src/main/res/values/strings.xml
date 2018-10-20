@@ -60,6 +60,7 @@
     <string name="returning_on_hint">Returning On</string>
     <string name="vehicle_type_hint">Vehicle Type</string>
     <string name="pickup_time_hint">Pickup Time</string>
+    <string name="phone_number_hint">Phone Number</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="am">AM</string>
@@ -105,5 +106,7 @@
 
     <string name="button_history">History</string>
     <string name="button_recent">Recent</string>
+    <string name="button_decline">Decline</string>
+    <string name="button_accept">Accept</string>
 
 </resources>

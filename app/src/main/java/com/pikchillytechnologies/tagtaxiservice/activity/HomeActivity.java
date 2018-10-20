@@ -169,8 +169,6 @@ public class HomeActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap = googleMap;
 
-        //mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-
         // Listen to location changes of user
         mLocationListener = new LocationListener() {
             @Override

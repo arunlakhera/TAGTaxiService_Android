@@ -11,10 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.pikchillytechnologies.tagtaxiservice.R;
 import com.pikchillytechnologies.tagtaxiservice.helperfile.HelperFile;
+import com.pikchillytechnologies.tagtaxiservice.model.Booking;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +31,26 @@ public class BookingDetailActivity extends AppCompatActivity implements Navigati
     @BindView(R.id.navigation_view)
     NavigationView mNavigationView;
 
+    @BindView(R.id.textView_Name)
+    TextView mNameTextView;
+    @BindView(R.id.textView_SourceAddress)
+    TextView mSourceAddressTextView;
+    @BindView(R.id.textView_DestinationAddress)
+    TextView mDestinationAddressTextView;
+    @BindView(R.id.textView_TravellingDate)
+    TextView mTravellingDateTextView;
+    @BindView(R.id.textView_ReturningDate)
+    TextView mReturningDateTextView;
+    @BindView(R.id.textView_Passengers)
+    TextView mPassengersTextView;
+    @BindView(R.id.textView_RoundTrip)
+    TextView mRoundTripTextView;
+    @BindView(R.id.textView_PhoneNumber)
+    TextView mPhoneNumberTextView;
+
     private HelperFile mHelperFile;
+    private Booking mBooking;
+    private Bundle mBookingBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +60,26 @@ public class BookingDetailActivity extends AppCompatActivity implements Navigati
         ButterKnife.bind(this);
         mHelperFile = new HelperFile();
 
+        mBooking = getIntent().getParcelableExtra("booking");
+
         mNavigationView.setNavigationItemSelectedListener(this);
         mScreenTitle_TextView.setText(R.string.screen_booking_detail);
+
+        updateUI();
+    }
+
+    // Update User Interface
+    public void updateUI(){
+
+        mNameTextView.setText("GUEST");
+        mSourceAddressTextView.setText(mBooking.getmPickupAddress());
+        mDestinationAddressTextView.setText(mBooking.getmDropAddress());
+        //mTravellingDateTextView.setText(mBooking.getmTravellingOnDate());
+        mReturningDateTextView.setText(mBooking.getmReturningOnDate());
+        mPassengersTextView.setText(mBooking.getmNumberOfPassengers());
+        mRoundTripTextView.setText(mBooking.getmRoundTrip());
+        //Toast.makeText(this,"Round Trip:" + mBooking.getmRoundTrip(),Toast.LENGTH_LONG).show();
+        mPhoneNumberTextView.setText(mBooking.getmUserPhoneNumber());
 
     }
 
@@ -58,7 +97,7 @@ public class BookingDetailActivity extends AppCompatActivity implements Navigati
     // Action to perform when back button is pressed
     @OnClick(R.id.button_Back)
     public void onBackButtonClick(View v) {
-        mHelperFile.screenIntent(BookingDetailActivity.this, BookingStatusActivity.class);
+        mHelperFile.screenIntent(BookingDetailActivity.this, BookingStatusActivity.class, mBooking.getmUserPhoneNumber());
     }
 
     /**
