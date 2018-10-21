@@ -12,4 +12,5 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorLime">#C0CA33</color>
     <color name="duskYellow">#FFDE03</color>
+    <color name="colorRed">#F44336</color>
 </resources>

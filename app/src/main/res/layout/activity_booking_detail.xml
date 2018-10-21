@@ -342,7 +342,7 @@
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_lar"
                     android:layout_marginRight="@dimen/margin_lar"
-                    app:cardBackgroundColor="#F44336"
+                    app:cardBackgroundColor="@color/colorRed"
                     app:cardCornerRadius="@dimen/card_radius"
                     app:cardElevation="@dimen/card_elevation">
 
