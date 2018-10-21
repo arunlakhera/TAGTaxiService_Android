@@ -9,276 +9,422 @@
     tools:context="com.pikchillytechnologies.tagtaxiservice.activity.BookingDetailActivity"
     tools:openDrawer="start">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:fillViewport="true"
-        tools:context=".activity.HomeActivity">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <include
+            android:id="@+id/layout_Toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_above="@id/layout_Button"
+            android:layout_below="@id/layout_Toolbar"
+            android:background="@color/colorPrimary"
+            android:fillViewport="true">
 
-            <include
-                android:id="@+id/layout_Toolbar"
-                layout="@layout/toolbar_layout" />
-
-            <android.support.v7.widget.CardView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/layout_Button"
-                android:layout_below="@id/layout_Toolbar"
-                android:layout_margin="@dimen/margin_lar"
-                app:cardBackgroundColor="@color/colorPrimary"
-                app:cardCornerRadius="@dimen/card_radius"
-                app:cardElevation="@dimen/card_elevation">
+                android:layout_height="wrap_content">
 
-                <ImageView
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_Booking"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/green_bg" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_above="@id/layout_Button"
-                    android:layout_below="@id/layout_Toolbar"
-                    android:layout_margin="@dimen/margin_small"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_lar"
                     android:layout_marginLeft="@dimen/margin_lar"
-                    android:layout_marginTop="@dimen/margin_vlar"
+                    android:layout_marginTop="@dimen/margin_lar"
                     android:layout_marginEnd="@dimen/margin_lar"
                     android:layout_marginRight="@dimen/margin_lar"
-                    android:layout_marginBottom="@dimen/margin_lar"
-                    android:orientation="vertical">
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/card_radius"
+                    app:cardElevation="@dimen/card_elevation">
 
-                    <TextView
-                        android:id="@+id/textView_NameDetail"
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_lar"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/text_title" />
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/green_bg" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_lar"
-                        android:layout_marginLeft="@dimen/margin_med"
-                        android:layout_marginEnd="@dimen/margin_lar"
-                        android:layout_marginRight="@dimen/margin_lar"
-                        android:layout_marginBottom="@dimen/margin_lar"
-                        android:orientation="horizontal">
+                        android:layout_margin="@dimen/margin_small"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView_SourceAddressDetail"
-                            android:layout_width="0dp"
+                            android:id="@+id/textView_NameDetail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_small"
-                            android:layout_weight="1"
+                            android:layout_margin="@dimen/margin_lar"
                             android:textAlignment="center"
                             android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/text_small" />
+                            android:textSize="@dimen/text_title" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_lar"
+                            android:layout_marginLeft="@dimen/margin_med"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:layout_marginBottom="@dimen/margin_lar"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView_SourceAddressDetail"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/text_small" />
+
+                            <TextView
+                                android:id="@+id/textView_DestinationAddressDetail"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/text_small" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_lar"
+                            android:layout_marginLeft="@dimen/margin_med"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:text="@string/travelling_on_hint"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="@dimen/text_small" />
+
+                            <TextView
+                                android:id="@+id/textView_ReturnOnLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:text="@string/returning_on_hint"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="@dimen/text_small" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_lar"
+                            android:layout_marginLeft="@dimen/margin_lar"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:layout_marginBottom="@dimen/margin_lar"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView_TravelDateDetail"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/text_small" />
+
+                            <TextView
+                                android:id="@+id/textView_ReturnDateDetail"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/text_small" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_lar"
+                            android:layout_marginLeft="@dimen/margin_med"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:text="@string/passengers_hint"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="@dimen/text_small" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:text="@string/round_trip_hint"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="@dimen/text_small" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_lar"
+                            android:layout_marginLeft="@dimen/margin_lar"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:layout_marginBottom="@dimen/margin_lar"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView_PassengersDetail"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/text_small" />
+
+                            <TextView
+                                android:id="@+id/textView_RoundTripDetail"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/text_small" />
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/textView_DestinationAddressDetail"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_small"
-                            android:layout_weight="1"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/text_small" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_lar"
-                        android:layout_marginLeft="@dimen/margin_med"
-                        android:layout_marginEnd="@dimen/margin_lar"
-                        android:layout_marginRight="@dimen/margin_lar"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_small"
-                            android:layout_weight="1"
-                            android:text="@string/travelling_on_hint"
+                            android:layout_marginStart="@dimen/margin_lar"
+                            android:layout_marginLeft="@dimen/margin_lar"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:text="@string/phone_number_hint"
                             android:textAlignment="center"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="@dimen/text_small" />
 
                         <TextView
-                            android:id="@+id/textView_ReturnOnLabel"
-                            android:layout_width="0dp"
+                            android:id="@+id/textView_PhoneNumberDetail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_small"
-                            android:layout_weight="1"
-                            android:text="@string/returning_on_hint"
+                            android:layout_marginStart="@dimen/margin_lar"
+                            android:layout_marginLeft="@dimen/margin_lar"
+                            android:layout_marginTop="@dimen/margin_lar"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:layout_marginBottom="@dimen/margin_lar"
                             android:textAlignment="center"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/text_small" />
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/text_title" />
+
+
                     </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <!-- Layout for Quote -->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_Quote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cardview_Booking"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    app:cardBackgroundColor="@color/colorLime"
+                    app:cardCornerRadius="@dimen/card_radius"
+                    app:cardElevation="@dimen/card_elevation">
 
                     <LinearLayout
+                        android:id="@+id/layout_Quote"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_lar"
-                        android:layout_marginLeft="@dimen/margin_lar"
-                        android:layout_marginEnd="@dimen/margin_lar"
-                        android:layout_marginRight="@dimen/margin_lar"
-                        android:layout_marginBottom="@dimen/margin_lar"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/textView_TravelDateDetail"
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_small"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/text_small" />
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textView_ReturnDateDetail"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:text="Amount"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/text_small" />
+
+                            <TextView
+                                android:id="@+id/textView_Amount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_small"
+                                android:layout_marginLeft="@dimen/margin_small"
+                                android:layout_marginEnd="@dimen/margin_small"
+                                android:layout_marginRight="@dimen/margin_small"
+                                android:layout_marginBottom="@dimen/margin_med"
+                                android:text="Rs.5000"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/text_med" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_small"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/text_small" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
+                                android:text="Vehicle"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/text_small" />
+
+                            <TextView
+                                android:id="@+id/textView_VehicleType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_small"
+                                android:layout_marginLeft="@dimen/margin_small"
+                                android:layout_marginEnd="@dimen/margin_small"
+                                android:layout_marginRight="@dimen/margin_small"
+                                android:layout_marginBottom="@dimen/margin_med"
+                                android:text="Toyota Innova"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/text_med" />
+                        </LinearLayout>
                     </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <!-- Layout for Driver -->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_Driver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cardview_Quote"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    app:cardBackgroundColor="#F44336"
+                    app:cardCornerRadius="@dimen/card_radius"
+                    app:cardElevation="@dimen/card_elevation">
 
                     <LinearLayout
+                        android:id="@+id/layout_Driver"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_lar"
-                        android:layout_marginLeft="@dimen/margin_med"
-                        android:layout_marginEnd="@dimen/margin_lar"
-                        android:layout_marginRight="@dimen/margin_lar"
+                        android:layout_margin="@dimen/margin_small"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                        <ImageView
+                            android:layout_width="@dimen/user_image_width"
+                            android:layout_height="@dimen/user_image_height"
                             android:layout_margin="@dimen/margin_small"
-                            android:layout_weight="1"
-                            android:text="@string/passengers_hint"
-                            android:textAlignment="center"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/text_small" />
+                            android:src="@drawable/my_profile_icon"
+                            android:scaleType="fitXY"
+                            />
 
-                        <TextView
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_small"
-                            android:layout_weight="1"
-                            android:text="@string/round_trip_hint"
-                            android:textAlignment="center"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/text_small" />
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rakesh Sharma"
+                                android:textColor="@android:color/white"
+                                android:layout_margin="@dimen/margin_small"
+                                />
+
+                            <RatingBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/ratingBar"
+                                style="?android:attr/ratingBarStyleIndicator"
+                                android:theme="@style/RatingBar"
+                                android:scaleX=".5"
+                                android:rating="3.5"
+                                android:scaleY=".5"
+                                android:transformPivotX="0dp"
+                                android:transformPivotY="0dp"
+                                android:max="5"/>
+                        </LinearLayout>
                     </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_lar"
-                        android:layout_marginLeft="@dimen/margin_lar"
-                        android:layout_marginEnd="@dimen/margin_lar"
-                        android:layout_marginRight="@dimen/margin_lar"
-                        android:layout_marginBottom="@dimen/margin_lar"
-                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/textView_PassengersDetail"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_small"
-                            android:layout_weight="1"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/text_small" />
+            </RelativeLayout>
+        </ScrollView>
 
-                        <TextView
-                            android:id="@+id/textView_RoundTripDetail"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_small"
-                            android:layout_weight="1"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/text_small" />
-                    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_lar"
-                        android:layout_marginLeft="@dimen/margin_lar"
-                        android:layout_marginEnd="@dimen/margin_lar"
-                        android:layout_marginRight="@dimen/margin_lar"
-                        android:text="@string/phone_number_hint"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="@dimen/text_small" />
-
-                    <TextView
-                        android:id="@+id/textView_PhoneNumberDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_lar"
-                        android:layout_marginLeft="@dimen/margin_lar"
-                        android:layout_marginTop="@dimen/margin_lar"
-                        android:layout_marginEnd="@dimen/margin_lar"
-                        android:layout_marginRight="@dimen/margin_lar"
-                        android:layout_marginBottom="@dimen/margin_lar"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/text_title" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <LinearLayout
-                android:id="@+id/layout_Button"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/button_Decline"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:background="@color/colorCardView"
+                android:text="@string/button_decline"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_lar" />
 
-                <Button
-                    android:id="@+id/button_Decline"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/colorCardView"
-                    android:text="@string/button_decline"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/text_lar" />
-
-                <Button
-                    android:id="@+id/button_Accept"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_green_dark"
-                    android:text="@string/button_accept"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/text_lar" />
-            </LinearLayout>
-
-        </RelativeLayout>
-    </ScrollView>
+            <Button
+                android:id="@+id/button_Accept"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/holo_green_dark"
+                android:text="@string/button_accept"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_lar" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

@@ -54,5 +54,7 @@
     <dimen name="layout_height_default">40dp</dimen>
     <dimen name="layout_width_default">40dp</dimen>
     <dimen name="layout_height_booking">100dp</dimen>
+    <dimen name="user_image_width">50dp</dimen>
+    <dimen name="user_image_height">50dp</dimen>
 
 </resources>

@@ -67,6 +67,7 @@ public class MyProfileActivity extends AppCompatActivity implements NavigationVi
     private FirebaseRef mFirebaseRef;
     private DatabaseReference mUserProfileRef;
     private User mUser;
+    private Boolean mSaveFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,7 @@ public class MyProfileActivity extends AppCompatActivity implements NavigationVi
         mHelperFile = new HelperFile();
         mUserBundle = getIntent().getExtras();
         mFirebaseRef = new FirebaseRef();
+        mSaveFlag = false;
 
         if(mUserBundle != null){
             mUserPhoneNumber = mUserBundle.getString("Phone");
@@ -95,6 +97,7 @@ public class MyProfileActivity extends AppCompatActivity implements NavigationVi
         updateUI();
         //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //Toast.makeText(this,"USER:" + mFirebaseRef.getmCurrentUser().getPhoneNumber(), Toast.LENGTH_LONG).show();
+
 
     }
 
@@ -127,13 +130,37 @@ public class MyProfileActivity extends AppCompatActivity implements NavigationVi
     @OnClick(R.id.button_Save)
     public void onSaveButtonClick(){
 
-        mUserProfileRef.child(mUserPhoneNumber).child("mName").setValue("Arun Sharma");
-        mUserProfileRef.child(mUserPhoneNumber).child("mGender").setValue("Male");
-        mUserProfileRef.child(mUserPhoneNumber).child("mEmailId").setValue("youremail@gmail.com");
-        mUserProfileRef.child(mUserPhoneNumber).child("mAddress").setValue("25 Rajendra Nagar");
-        mUserProfileRef.child(mUserPhoneNumber).child("mCity").setValue("Dehradun");
-        mUserProfileRef.child(mUserPhoneNumber).child("mState").setValue("Uttarakhand");
-        
+        if(updateUserProfile()){
+
+            mHelperFile.screenToast(this,R.string.saved,Toast.LENGTH_LONG);
+        }
+
+    }
+
+    public Boolean updateUserProfile(){
+
+        String mName = String.valueOf(mUserNameTextView.getText());
+        String mGender = String.valueOf(mGenderTextView.getText());
+        String mEmailId = String.valueOf(mEmailIdTextView.getText());
+        String mAddress = String.valueOf(mAddressTextView.getText());
+        String mCity = String.valueOf(mCityTextView.getText());
+        String mState = String.valueOf(mStateTextView.getText());
+
+        try {
+            mUserProfileRef.child(mUserPhoneNumber).child("mName").setValue(mName);
+            mUserProfileRef.child(mUserPhoneNumber).child("mGender").setValue(mGender);
+            mUserProfileRef.child(mUserPhoneNumber).child("mEmailId").setValue(mEmailId);
+            mUserProfileRef.child(mUserPhoneNumber).child("mAddress").setValue(mAddress);
+            mUserProfileRef.child(mUserPhoneNumber).child("mCity").setValue(mCity);
+            mUserProfileRef.child(mUserPhoneNumber).child("mState").setValue(mState);
+            mSaveFlag = true;
+
+        }catch(Exception e){
+            mSaveFlag = false;
+            mHelperFile.screenToast(this,R.string.save_error,Toast.LENGTH_LONG);
+        }
+
+        return mSaveFlag;
 
     }
 

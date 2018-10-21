@@ -10,4 +10,6 @@
     <color name="colorOrangeLight">#F0AE41</color>
     <color name="colorGreen">#4CAF50</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorLime">#C0CA33</color>
+    <color name="duskYellow">#FFDE03</color>
 </resources>
