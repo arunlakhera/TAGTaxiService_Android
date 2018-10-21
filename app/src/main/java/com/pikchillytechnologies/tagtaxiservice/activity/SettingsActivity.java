@@ -30,6 +30,8 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     NavigationView mNavigationView;
 
     private HelperFile mHelperFile;
+    private Bundle mUserBundle;
+    private String mUserPhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +41,15 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         ButterKnife.bind(this);
 
         mHelperFile = new HelperFile();
+        mUserBundle = getIntent().getExtras();
+        mUserPhoneNumber = mUserBundle.getString("Phone");
 
         mNavigationView.setNavigationItemSelectedListener(this);
         mScreenTitle_TextView.setText(R.string.screen_my_profile);
+
+        View mMenuHeader;
+        mMenuHeader = mNavigationView.getHeaderView(0);
+        ((TextView) mMenuHeader.findViewById(R.id.textView_Phone_Number_Nav)).setText(mUserPhoneNumber);
 
     }
 
@@ -59,7 +67,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     // Action to perform when back button is pressed
     @OnClick(R.id.button_Back)
     public void onBackButtonClick(View v) {
-        mHelperFile.screenIntent(SettingsActivity.this, HomeActivity.class);
+        mHelperFile.screenIntent(SettingsActivity.this, HomeActivity.class,mUserPhoneNumber);
     }
 
     /**
@@ -69,7 +77,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // Call Navigate function for the item selected
-        mHelperFile.menuOptionSelected(item,SettingsActivity.this);
+        mHelperFile.menuOptionSelected(item,SettingsActivity.this, mUserPhoneNumber);
 
         // Close the menu once any option is selected by user
         mDrawer.closeDrawer(Gravity.START);

@@ -21,7 +21,6 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
     private List<Booking> mBooking;
     Context context;
     Booking booking;
-    int index;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -65,10 +64,9 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         // Get the data model based on position
-        index = position;
         booking = mBooking.get(position);
         String travelDate;
 
@@ -94,10 +92,9 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         holder.layoutParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"You clicked:" + booking.getmBookingId() + "-" + booking.getmRoundTrip(),Toast.LENGTH_LONG).show();
 
                 Intent bookingDetailIntent = new Intent(context, BookingDetailActivity.class);
-                bookingDetailIntent.putExtra("booking", mBooking.get(index));
+                bookingDetailIntent.putExtra("booking", mBooking.get(position));
                 context.startActivity(bookingDetailIntent);
             }
         });

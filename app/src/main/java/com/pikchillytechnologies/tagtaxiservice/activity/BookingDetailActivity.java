@@ -31,26 +31,27 @@ public class BookingDetailActivity extends AppCompatActivity implements Navigati
     @BindView(R.id.navigation_view)
     NavigationView mNavigationView;
 
-    @BindView(R.id.textView_Name)
+    @BindView(R.id.textView_NameDetail)
     TextView mNameTextView;
-    @BindView(R.id.textView_SourceAddress)
+    @BindView(R.id.textView_SourceAddressDetail)
     TextView mSourceAddressTextView;
-    @BindView(R.id.textView_DestinationAddress)
+    @BindView(R.id.textView_DestinationAddressDetail)
     TextView mDestinationAddressTextView;
-    @BindView(R.id.textView_TravellingDate)
-    TextView mTravellingDateTextView;
-    @BindView(R.id.textView_ReturningDate)
-    TextView mReturningDateTextView;
-    @BindView(R.id.textView_Passengers)
-    TextView mPassengersTextView;
-    @BindView(R.id.textView_RoundTrip)
-    TextView mRoundTripTextView;
-    @BindView(R.id.textView_PhoneNumber)
+    @BindView(R.id.textView_TravelDateDetail)
+    TextView mTravelDateDetailTextView;
+    @BindView(R.id.textView_ReturnDateDetail)
+    TextView mReturnDateDetailTextView;
+    @BindView(R.id.textView_PassengersDetail)
+    TextView mPassengersDetailTextView;
+    @BindView(R.id.textView_RoundTripDetail)
+    TextView mRoundTripDetailTextView;
+    @BindView(R.id.textView_PhoneNumberDetail)
     TextView mPhoneNumberTextView;
+    @BindView(R.id.textView_ReturnOnLabel)
+    TextView mReturnOnLabelTextView;
 
     private HelperFile mHelperFile;
-    private Booking mBooking;
-    private Bundle mBookingBundle;
+    private Booking mBookingDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +61,14 @@ public class BookingDetailActivity extends AppCompatActivity implements Navigati
         ButterKnife.bind(this);
         mHelperFile = new HelperFile();
 
-        mBooking = getIntent().getParcelableExtra("booking");
+        mBookingDetail = getIntent().getParcelableExtra("booking");
 
         mNavigationView.setNavigationItemSelectedListener(this);
         mScreenTitle_TextView.setText(R.string.screen_booking_detail);
+
+        View mMenuHeader;
+        mMenuHeader = mNavigationView.getHeaderView(0);
+        ((TextView) mMenuHeader.findViewById(R.id.textView_Phone_Number_Nav)).setText(mBookingDetail.getmUserPhoneNumber());
 
         updateUI();
     }
@@ -72,14 +77,23 @@ public class BookingDetailActivity extends AppCompatActivity implements Navigati
     public void updateUI(){
 
         mNameTextView.setText("GUEST");
-        mSourceAddressTextView.setText(mBooking.getmPickupAddress());
-        mDestinationAddressTextView.setText(mBooking.getmDropAddress());
-        //mTravellingDateTextView.setText(mBooking.getmTravellingOnDate());
-        mReturningDateTextView.setText(mBooking.getmReturningOnDate());
-        mPassengersTextView.setText(mBooking.getmNumberOfPassengers());
-        mRoundTripTextView.setText(mBooking.getmRoundTrip());
-        //Toast.makeText(this,"Round Trip:" + mBooking.getmRoundTrip(),Toast.LENGTH_LONG).show();
-        mPhoneNumberTextView.setText(mBooking.getmUserPhoneNumber());
+        mSourceAddressTextView.setText(mBookingDetail.getmPickupAddress());
+        mDestinationAddressTextView.setText(mBookingDetail.getmDropAddress());
+
+        if(mBookingDetail.getmRoundTrip().equals("Yes")){
+            mReturnOnLabelTextView.setVisibility(View.VISIBLE);
+            mReturnDateDetailTextView.setVisibility(View.VISIBLE);
+            mReturnDateDetailTextView.setText(mBookingDetail.getmReturningOnDate());
+        }else{
+            mReturnOnLabelTextView.setVisibility(View.INVISIBLE);
+            mReturnDateDetailTextView.setVisibility(View.INVISIBLE);
+        }
+
+        mTravelDateDetailTextView.setText(mBookingDetail.getmTravellingOnDate());
+
+        mPassengersDetailTextView.setText(mBookingDetail.getmNumberOfPassengers());
+        mRoundTripDetailTextView.setText(mBookingDetail.getmRoundTrip());
+        mPhoneNumberTextView.setText(mBookingDetail.getmUserPhoneNumber());
 
     }
 
@@ -97,7 +111,7 @@ public class BookingDetailActivity extends AppCompatActivity implements Navigati
     // Action to perform when back button is pressed
     @OnClick(R.id.button_Back)
     public void onBackButtonClick(View v) {
-        mHelperFile.screenIntent(BookingDetailActivity.this, BookingStatusActivity.class, mBooking.getmUserPhoneNumber());
+        mHelperFile.screenIntent(BookingDetailActivity.this, BookingStatusActivity.class, mBookingDetail.getmUserPhoneNumber());
     }
 
     /**
@@ -107,7 +121,7 @@ public class BookingDetailActivity extends AppCompatActivity implements Navigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // Call Navigate function for the item selected
-        mHelperFile.menuOptionSelected(item,BookingDetailActivity.this);
+        mHelperFile.menuOptionSelected(item,BookingDetailActivity.this,mBookingDetail.getmUserPhoneNumber());
 
         // Close the menu once any option is selected by user
         mDrawer.closeDrawer(Gravity.START);

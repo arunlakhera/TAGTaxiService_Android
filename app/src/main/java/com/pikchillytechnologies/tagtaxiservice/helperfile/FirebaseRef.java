@@ -8,7 +8,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class FirebaseRef {
 
-
+    private FirebaseUser mCurrentUser;
     private FirebaseAuth mAuthRef;
     private DatabaseReference mDatabaseRef;
     private DatabaseReference mUserRef;
@@ -17,6 +17,7 @@ public class FirebaseRef {
 
     public FirebaseRef() {
 
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mAuthRef = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
@@ -25,6 +26,10 @@ public class FirebaseRef {
         mBookingRef = mDatabaseRef.child("Booking/");
         mUserBookingRef = mDatabaseRef.child("UserBooking/");
 
+    }
+
+    public FirebaseUser getmCurrentUser() {
+        return mCurrentUser;
     }
 
     public FirebaseAuth getmAuthRef() {
@@ -46,4 +51,5 @@ public class FirebaseRef {
     public DatabaseReference getmUserBookingRef() {
         return mUserBookingRef;
     }
+
 }

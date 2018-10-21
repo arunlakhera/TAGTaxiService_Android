@@ -46,29 +46,30 @@ public class HelperFile {
     /**
      * Function to Navigate to Menu item selected
      * */
-    public void menuOptionSelected(MenuItem item, Context c){
+    public void menuOptionSelected(MenuItem item, Context c, String userPhoneNumber){
 
         switch (item.getItemId()) {
 
             case R.id.item_book_home:
-                screenIntent(c, HomeActivity.class);
+                screenIntent(c, HomeActivity.class,userPhoneNumber);
                 break;
             case R.id.item_book_ride:
-                screenIntent(c, BookRideActivity.class);
+                screenIntent(c, BookRideActivity.class,userPhoneNumber);
                 break;
             case R.id.item_booking_status:
-                screenIntent(c, BookingStatusActivity.class);
+                screenIntent(c, BookingStatusActivity.class,userPhoneNumber);
                 break;
             case R.id.item_my_profile:
-                screenIntent(c, MyProfileActivity.class);
+                screenIntent(c, MyProfileActivity.class,userPhoneNumber);
                 break;
             case R.id.item_settings:
-                screenIntent(c, SettingsActivity.class);
+                screenIntent(c, SettingsActivity.class,userPhoneNumber);
                 break;
             case R.id.item_logout:
                 FirebaseAuth.getInstance().signOut();
-                screenIntent(c, SignInActivity.class);
+                screenIntent(c, SignInActivity.class,userPhoneNumber);
                 break;
+
         }
     }
 }

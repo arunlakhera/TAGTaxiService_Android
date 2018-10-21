@@ -71,7 +71,6 @@ public class HomeActivity extends FragmentActivity implements OnMapReadyCallback
         mUserBundle = getIntent().getExtras();
         mUserPhoneNumber = mUserBundle.getString("Phone");
 
-        Toast.makeText(HomeActivity.this,"Welcome:" + mUserPhoneNumber,Toast.LENGTH_LONG).show();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -80,6 +79,10 @@ public class HomeActivity extends FragmentActivity implements OnMapReadyCallback
 
         mHelperFile = new HelperFile();
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        View mMenuHeader;
+        mMenuHeader = mNavigationView.getHeaderView(0);
+        ((TextView) mMenuHeader.findViewById(R.id.textView_Phone_Number_Nav)).setText(mUserPhoneNumber);
 
         // Call function to Set values
         setValues();
@@ -93,6 +96,7 @@ public class HomeActivity extends FragmentActivity implements OnMapReadyCallback
             mDrawer.closeDrawer(Gravity.START);
         } else {
             mDrawer.openDrawer(Gravity.START);
+
         }
     }
 
@@ -134,7 +138,7 @@ public class HomeActivity extends FragmentActivity implements OnMapReadyCallback
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // Call Navigate function for the item selected
-        mHelperFile.menuOptionSelected(item, HomeActivity.this);
+        mHelperFile.menuOptionSelected(item, HomeActivity.this,mUserPhoneNumber);
 
         // Close the menu once any option is selected by user
         mDrawer.closeDrawer(Gravity.START);

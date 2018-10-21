@@ -163,6 +163,10 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
         // Spinner dropdown elements
         mTime = new ArrayList<>();
 
+        View mMenuHeader;
+        mMenuHeader = mNavigationView.getHeaderView(0);
+        ((TextView) mMenuHeader.findViewById(R.id.textView_Phone_Number_Nav)).setText(mUserPhoneNumber);
+
         // Set the values
         setValues();
 
@@ -436,7 +440,7 @@ public class BookRideActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // Call Navigate function for the item selected
-        mHelperFile.menuOptionSelected(item, BookRideActivity.this);
+        mHelperFile.menuOptionSelected(item, BookRideActivity.this, mUserPhoneNumber);
 
         // Close the menu once any option is selected by user
         mDrawer.closeDrawer(Gravity.START);

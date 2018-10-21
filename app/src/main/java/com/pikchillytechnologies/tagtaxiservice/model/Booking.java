@@ -48,6 +48,7 @@ public class Booking implements Parcelable {
         mPickupAddress = in.readString();
         mDropAddress = in.readString();
         mNumberOfPassengers = in.readString();
+        mRoundTrip = in.readString();
         mTravellingOnDate = in.readString();
         mReturningOnDate = in.readString();
         mVehicleType = in.readString();

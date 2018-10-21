@@ -39,7 +39,7 @@
         />
 
     <TextView
-        android:id="@+id/textView_Phone_Number"
+        android:id="@+id/textView_Phone_Number_Nav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"

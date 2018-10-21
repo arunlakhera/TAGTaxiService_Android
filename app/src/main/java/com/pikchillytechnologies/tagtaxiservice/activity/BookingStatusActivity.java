@@ -76,6 +76,10 @@ public class BookingStatusActivity extends AppCompatActivity implements Navigati
         mNavigationView.setNavigationItemSelectedListener(this);
         mScreenTitle_TextView.setText(R.string.screen_booking_status);
 
+        View mMenuHeader;
+        mMenuHeader = mNavigationView.getHeaderView(0);
+        ((TextView) mMenuHeader.findViewById(R.id.textView_Phone_Number_Nav)).setText(mUserPhoneNumber);
+
         updateUI();
 
     }
@@ -155,7 +159,7 @@ public class BookingStatusActivity extends AppCompatActivity implements Navigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // Call Navigate function for the item selected
-        mHelperFile.menuOptionSelected(item,BookingStatusActivity.this);
+        mHelperFile.menuOptionSelected(item,BookingStatusActivity.this,mUserPhoneNumber);
 
         // Close the menu once any option is selected by user
         mDrawer.closeDrawer(Gravity.START);
