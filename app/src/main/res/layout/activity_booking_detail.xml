@@ -46,7 +46,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/green_bg" />
+                        android:src="@drawable/green_plain_bg" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -109,8 +109,9 @@
                                 android:layout_margin="@dimen/margin_small"
                                 android:layout_weight="1"
                                 android:text="@string/travelling_on_hint"
+                                android:textStyle="bold"
                                 android:textAlignment="center"
-                                android:textColor="@android:color/darker_gray"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="@dimen/text_small" />
 
                             <TextView
@@ -120,8 +121,9 @@
                                 android:layout_margin="@dimen/margin_small"
                                 android:layout_weight="1"
                                 android:text="@string/returning_on_hint"
+                                android:textStyle="bold"
                                 android:textAlignment="center"
-                                android:textColor="@android:color/darker_gray"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="@dimen/text_small" />
                         </LinearLayout>
 
@@ -171,8 +173,9 @@
                                 android:layout_margin="@dimen/margin_small"
                                 android:layout_weight="1"
                                 android:text="@string/passengers_hint"
+                                android:textStyle="bold"
                                 android:textAlignment="center"
-                                android:textColor="@android:color/darker_gray"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="@dimen/text_small" />
 
                             <TextView
@@ -180,9 +183,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/margin_small"
                                 android:layout_weight="1"
+                                android:textStyle="bold"
                                 android:text="@string/round_trip_hint"
                                 android:textAlignment="center"
-                                android:textColor="@android:color/darker_gray"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="@dimen/text_small" />
                         </LinearLayout>
 
@@ -226,7 +230,8 @@
                             android:layout_marginRight="@dimen/margin_lar"
                             android:text="@string/phone_number_hint"
                             android:textAlignment="center"
-                            android:textColor="@android:color/darker_gray"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/text_small" />
 
                         <TextView
@@ -249,10 +254,34 @@
 
                 <!-- Layout for Quote -->
                 <android.support.v7.widget.CardView
-                    android:id="@+id/cardview_Quote"
+                    android:id="@+id/cardview_Status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cardview_Booking"
+                    android:layout_marginStart="@dimen/margin_lar"
+                    android:layout_marginLeft="@dimen/margin_lar"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_lar"
+                    android:layout_marginRight="@dimen/margin_lar"
+                    app:cardBackgroundColor="@color/colorAccent"
+                    app:cardCornerRadius="@dimen/card_radius"
+                    app:cardElevation="@dimen/card_elevation">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/declined_status"
+                        android:background="@color/colorAccent"
+                        android:layout_margin="2dp"
+                        android:padding="@dimen/margin_small"
+                        />
+                </android.support.v7.widget.CardView>
+                <!-- Layout for Quote -->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_Quote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cardview_Status"
                     android:layout_marginStart="@dimen/margin_lar"
                     android:layout_marginLeft="@dimen/margin_lar"
                     android:layout_marginTop="@dimen/margin_small"
@@ -266,70 +295,106 @@
                         android:id="@+id/layout_Quote"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:background="@color/colorLime"
+                        android:layout_margin="2dp"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginBottom="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_lar"
+                            android:layout_marginStart="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:layout_marginEnd="@dimen/margin_lar"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:layout_margin="@dimen/margin_small"
                                 android:text="Amount"
-                                android:textAlignment="center"
-                                android:textColor="@android:color/black"
+                                android:gravity="start|center"
+                                android:textColor="@color/colorPrimary"
+                                android:textStyle="bold"
                                 android:textSize="@dimen/text_small" />
 
                             <TextView
                                 android:id="@+id/textView_Amount"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_small"
-                                android:layout_marginLeft="@dimen/margin_small"
-                                android:layout_marginEnd="@dimen/margin_small"
-                                android:layout_marginRight="@dimen/margin_small"
-                                android:layout_marginBottom="@dimen/margin_med"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="Rs.5000"
-                                android:textAlignment="center"
+                                android:gravity="start|center"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/text_med" />
+
+                            <Button
+                                android:id="@+id/button_Decline"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:layout_weight="1"
+                                android:text="Decline"
+                                android:textAllCaps="false"
+                                android:gravity="center"
+                                android:background="@drawable/button_red_decline"
+                                android:textColor="@android:color/white"
+                                />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginBottom="@dimen/margin_small"
+                            android:layout_marginLeft="@dimen/margin_lar"
+                            android:layout_marginStart="@dimen/margin_lar"
+                            android:layout_marginRight="@dimen/margin_lar"
+                            android:layout_marginEnd="@dimen/margin_lar"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:layout_margin="@dimen/margin_small"
                                 android:text="Vehicle"
-                                android:textAlignment="center"
-                                android:textColor="@android:color/black"
+                                android:gravity="start|center"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="@dimen/text_small" />
 
                             <TextView
                                 android:id="@+id/textView_VehicleType"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_small"
-                                android:layout_marginLeft="@dimen/margin_small"
-                                android:layout_marginEnd="@dimen/margin_small"
-                                android:layout_marginRight="@dimen/margin_small"
-                                android:layout_marginBottom="@dimen/margin_med"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="Toyota Innova"
-                                android:textAlignment="center"
+                                android:gravity="start|center"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/text_med" />
+
+                            <Button
+                                android:id="@+id/button_Accept"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Accept"
+                                android:textAllCaps="false"
+                                android:background="@drawable/button_green_accept"
+                                android:textColor="@android:color/white"
+                                />
                         </LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
+
+
 
                 <!-- Layout for Driver -->
                 <android.support.v7.widget.CardView
@@ -342,9 +407,15 @@
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_lar"
                     android:layout_marginRight="@dimen/margin_lar"
-                    app:cardBackgroundColor="@color/colorRed"
+                    app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="@dimen/card_radius"
                     app:cardElevation="@dimen/card_elevation">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/green_bg" />
 
                     <LinearLayout
                         android:id="@+id/layout_Driver"
@@ -358,6 +429,7 @@
                             android:layout_height="@dimen/user_image_height"
                             android:layout_margin="@dimen/margin_small"
                             android:src="@drawable/my_profile_icon"
+                            android:layout_gravity="center"
                             android:scaleType="fitXY"
                             />
 
@@ -365,6 +437,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:layout_margin="@dimen/margin_small"
                             >
 
                             <TextView
@@ -378,6 +451,7 @@
                             <RatingBar
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_small"
                                 android:id="@+id/ratingBar"
                                 style="?android:attr/ratingBarStyleIndicator"
                                 android:theme="@style/RatingBar"
@@ -388,42 +462,39 @@
                                 android:transformPivotY="0dp"
                                 android:max="5"/>
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_margin="@dimen/margin_small"
+                            android:gravity="center"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pickup"
+                                android:textSize="@dimen/text_small"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorToolbar"
+                                android:layout_margin="@dimen/margin_small"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10 am"
+                                android:textColor="@android:color/white"
+                                android:layout_margin="@dimen/margin_small"
+                                />
+
+                        </LinearLayout>
+
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
-
-
             </RelativeLayout>
         </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/layout_Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button_Decline"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorCardView"
-                android:text="@string/button_decline"
-                android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_lar" />
-
-            <Button
-                android:id="@+id/button_Accept"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/holo_green_dark"
-                android:text="@string/button_accept"
-                android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_lar" />
-        </LinearLayout>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
