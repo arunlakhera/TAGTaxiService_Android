@@ -103,7 +103,7 @@
                                 android:enabled="false"
                                 android:hint="@string/phone_hint"
                                 android:inputType="phone"
-                                android:maxLength="10"
+                                android:maxLength="13"
                                 android:textColor="@android:color/darker_gray"
                                 android:textSize="@dimen/text_med" />
                         </android.support.design.widget.TextInputLayout>
